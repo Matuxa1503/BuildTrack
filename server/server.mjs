@@ -83,12 +83,18 @@ const parseHtml = (data) => {
       if (Boolean(dateBuildText)) {
         const title = dateBuild.siblings().find('h3 a');
         const link = title.attr('href');
-        dataArr.push({ title: title.text(), dateBuildText, link });
+        const threePrevious = dateBuild.prevAll('p').slice(0, 3);
+        const someInfoBuild = threePrevious
+          .map((index, element) => {
+            return $(element).text().trim();
+          })
+          .get() // get() преобразует jQuery объект в обычный массив
+          .reverse();
+        dataArr.push({ title: title.text(), dateBuildText, link, moreInfo: someInfoBuild });
       }
     }
     return dataArr;
   };
-
   return getDataBuild();
 };
 

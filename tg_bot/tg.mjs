@@ -15,7 +15,7 @@ const btnOptions = {
 
 const btnOptions2 = {
   reply_markup: JSON.stringify({
-    inline_keyboard: [[{ text: 'Отобразить информацию в React приложении', url: 'https://64d8-37-214-30-90.ngrok-free.app' }]],
+    inline_keyboard: [[{ text: 'Отобразить информацию в React приложении', url: 'https://a9f1-37-214-59-176.ngrok-free.app' }]],
   }),
 };
 
@@ -67,7 +67,8 @@ const getLastElem = async (chat) => {
 
   return bot.sendMessage(
     chatId,
-    `Последняя добавленная застройка: \n${lastEl.title}.\n${lastEl.dateBuildText} \nДля подробной информации кликнете по ссылке: ${lastEl.link}`
+    `Последняя добавленная застройка: \n${lastEl.title}.\n${lastEl.dateBuildText} \nДля подробной информации кликнете по кнопке ниже:`,
+    btnOptions2
   );
 };
 
@@ -89,7 +90,7 @@ const getNewElem = async (chat) => {
     newElementsArr.forEach((item) => {
       return bot.sendMessage(
         chatId,
-        `Появилась новая застройка: \n${item.title}.\n${item.dateBuildText} \nДля подробной информации кликнете по ссылке: ${item.link}`,
+        `Появилась новая застройка: \n${item.title}.\n${item.dateBuildText} \nДля подробной информации кликнете по кнопке ниже:`,
         btnOptions2
       );
     });
