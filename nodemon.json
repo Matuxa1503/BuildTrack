@@ -1,0 +1,4 @@
+{
+  "watch": ["server, tg_bot"],
+  "ignore": ["*.json", "src/data.json"]
+}

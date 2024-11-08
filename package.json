@@ -22,9 +22,10 @@
     "client": "react-scripts start",
     "server": "nodemon server/server.mjs",
     "tgBot": "nodemon tg_bot/tg.mjs",
+    "tgBotDev": "nodemon tg_bot/tgDev.mjs",
     "ngrokReact": "ngrok http 3000",
     "serveoServer": "ssh -R 80:localhost:5000 serveo.net",
-    "dev": "concurrently \"npm run client\" \"npm run server\" \"npm run tgBot\" \"npm run serveoServer\"",
+    "dev": "concurrently \"npm run server\" \"npm run tgBotDev\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

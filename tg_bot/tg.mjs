@@ -15,7 +15,7 @@ const btnOptions = {
 
 const btnOptions2 = {
   reply_markup: JSON.stringify({
-    inline_keyboard: [[{ text: 'Отобразить информацию в React приложении', url: 'https://a9f1-37-214-59-176.ngrok-free.app' }]],
+    inline_keyboard: [[{ text: 'Отобразить информацию в React приложении', url: 'https://8bcd-37-214-69-1.ngrok-free.app' }]],
   }),
 };
 
@@ -59,7 +59,7 @@ const getLastElem = async (chat) => {
   let lastEl = '';
 
   try {
-    const response = await axios.get('http://localhost:5000/last-element');
+    const response = await axios.get('https://9cbccb62268b5ee3f0abf1471c915269.serveo.net/last-element');
     lastEl = response.data.message;
   } catch (err) {
     console.log(err);
@@ -78,7 +78,7 @@ const getNewElem = async (chat) => {
   let newElementsArr = '';
 
   try {
-    const response = await axios.get('http://localhost:5000');
+    const response = await axios.get('https://9cbccb62268b5ee3f0abf1471c915269.serveo.net');
     newElementsArr = response.data.message;
   } catch (err) {
     console.log(err);
