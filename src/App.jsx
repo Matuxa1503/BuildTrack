@@ -11,9 +11,9 @@ const App = () => {
 
   const getLastElementData = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/');
-      setItem(response.data.message[0]);
-      console.log(response.data.message);
+      const response = await axios.get('http://localhost:5000/last');
+      setItem(response.data.message);
+      console.log(response.data);
     } catch (err) {
       console.log(err);
     }

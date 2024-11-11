@@ -21,6 +21,7 @@ const start = () => {
   bot.on('message', async (msg) => {
     const text = msg.text;
     const chatId = msg.chat.id;
+    const id = msg.from.id;
     bot.setMyCommands([{ command: '/last', description: 'Информация о последней добавленной застройке' }]);
 
     // if (!intervalStarted) {
@@ -33,7 +34,7 @@ const start = () => {
     if (text === '/start') {
       return bot.sendMessage(
         chatId,
-        'Добро пожаловать. Для получения информации о последней застройке нажмите кнопку ниже или введите команду /last. При появлении новой застройки бот присылает её автоматически',
+        `Добро пожаловать. Для получения информации о последней застройке нажмите кнопку ниже или введите команду /last. При появлении новой застройки бот присылает её автоматически`,
         btnOptions
       );
     }
@@ -79,18 +80,18 @@ const checkNewEl = async (chat) => {
 
 const getLastElem = async (chat) => {
   const chatId = chat;
-  let lastEl = '';
+  let el = '';
 
   try {
-    const response = await axios.get('https://9cbccb62268b5ee3f0abf1471c915269.serveo.net/last-element');
-    lastEl = response.data.message;
+    const response = await axios.get('http://localhost:5000/last');
+    el = response.data.message.data;
   } catch (err) {
     console.log(err);
   }
 
   return bot.sendMessage(
     chatId,
-    `Последняя добавленная застройка: \n${lastEl.title}.\n${lastEl.dateBuildText} \nДля подробной информации кликнете по кнопке ниже:`,
+    `Последняя добавленная застройка: \n${el.title}.\n${el.dateBuild} \nДля подробной информации кликнете по кнопке ниже:`,
     btnOptions2
   );
 };

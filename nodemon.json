@@ -1,4 +1,4 @@
 {
-  "watch": ["server, tg_bot"],
+  "watch": ["server, tg_bot, utils"],
   "ignore": ["*.json", "src/data.json"]
 }
