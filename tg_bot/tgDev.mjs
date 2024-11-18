@@ -21,7 +21,7 @@ const start = () => {
   bot.on('message', async (msg) => {
     const text = msg.text;
     const chatId = msg.chat.id;
-    const id = msg.from.id;
+    const userId = msg.from.id;
     bot.setMyCommands([{ command: '/last', description: 'Информация о последней добавленной застройке' }]);
 
     // if (!intervalStarted) {
@@ -32,6 +32,7 @@ const start = () => {
     // }
 
     if (text === '/start') {
+      checkUserDb(userId);
       return bot.sendMessage(
         chatId,
         `Добро пожаловать. Для получения информации о последней застройке нажмите кнопку ниже или введите команду /last. При появлении новой застройки бот присылает её автоматически`,
@@ -44,7 +45,7 @@ const start = () => {
     }
 
     if (text === '/time') {
-      checkNewEl(chatId);
+      checkNewEl(chatId, userId);
     }
   });
 };
@@ -55,12 +56,20 @@ bot.on('callback_query', async (msg) => {
   }
 });
 
-const checkNewEl = async (chat) => {
+const checkUserDb = async (userId) => {
+  try {
+    await axios.post('http://localhost:5000/addUser', { userId });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const checkNewEl = async (chat, userId) => {
   const chatId = chat;
   let elmsArr = '';
 
   try {
-    const response = await axios.get('http://localhost:5000/');
+    const response = await axios.get('http://localhost:5000/', { params: { userId } });
     elmsArr = response.data.message;
   } catch (err) {
     console.log(err);
