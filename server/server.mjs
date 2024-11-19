@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import httpClient from './utils/httpClient.mjs';
 import { htmlParser } from '../src/services/parser/htmlParser.mjs';
-import getLastEl from './utils/getLastElement.mjs';
+import getLastEl from './utils/getLastEl.mjs';
 import checkUser from './utils/checkUser.mjs';
 import mongoose from 'mongoose';
 import createUser from './utils/createUser.mjs';
@@ -46,7 +46,9 @@ const processingData = async (req, res) => {
 
 const lastEl = async (req, res) => {
   try {
-    const el = await getLastEl();
+    const userIdTg = req.query.userId;
+    const el = await getLastEl(userIdTg);
+
     res.json({ message: el });
   } catch (err) {
     console.log(err.message);

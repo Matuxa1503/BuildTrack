@@ -41,7 +41,7 @@ const start = () => {
     }
 
     if (text === '/last') {
-      getLastElem(chatId);
+      getLastEl(chatId, userId);
     }
 
     if (text === '/time') {
@@ -52,7 +52,7 @@ const start = () => {
 
 bot.on('callback_query', async (msg) => {
   if (msg.data === 'prev-buildings') {
-    getLastElem(msg.message.chat.id);
+    getLastEl(msg.message.chat.id);
   }
 });
 
@@ -60,50 +60,52 @@ const checkUserDb = async (userId) => {
   try {
     await axios.post('http://localhost:5000/addUser', { userId });
   } catch (err) {
-    console.log(err);
+    console.error('Error tgBot checkUserDb', err.message);
   }
 };
 
 const checkNewEl = async (chat, userId) => {
-  const chatId = chat;
-  let elmsArr = '';
-
   try {
+    const chatId = chat;
+    let elmsArr = '';
     const response = await axios.get('http://localhost:5000/', { params: { userId } });
     elmsArr = response.data.message;
-  } catch (err) {
-    console.log(err);
-  }
 
-  if (elmsArr.length === 0) {
-    // Здесь потом будет пустота
-    bot.sendMessage(chatId, `Новых застроек не появилось`);
-  } else {
-    elmsArr.forEach((item) => {
-      return bot.sendMessage(
-        chatId,
-        `Появилась новая застройка: \n${item.data.title}.\n${item.data.dateBuild} \nДля подробной информации кликнете по кнопке ниже:`
-      );
-    });
+    if (elmsArr.length === 0) {
+      // Здесь потом будет пустота
+      bot.sendMessage(chatId, `Новых застроек не появилось`);
+    } else {
+      elmsArr.forEach((item) => {
+        return bot.sendMessage(
+          chatId,
+          `Появилась новая застройка: \n${item.data.title}.\n${item.data.dateBuild} \nДля подробной информации кликнете по кнопке ниже:`
+        );
+      });
+    }
+  } catch (err) {
+    console.error('Error tgBot checkNewEl', err.message);
   }
 };
 
-const getLastElem = async (chat) => {
-  const chatId = chat;
-  let el = '';
-
+const getLastEl = async (chat, userId) => {
   try {
-    const response = await axios.get('http://localhost:5000/last');
-    el = response.data.message.data;
-  } catch (err) {
-    console.log(err);
-  }
+    const response = await axios.get('http://localhost:5000/last', { params: { userId } });
+    const chatId = chat;
+    // если response.data.message пустой записать в el = null, в противном случае записать элемент
+    const el = response.data.message ? response.data.message.items[0].data : null;
 
-  return bot.sendMessage(
-    chatId,
-    `Последняя добавленная застройка: \n${el.title}.\n${el.dateBuild} \nДля подробной информации кликнете по кнопке ниже:`,
-    btnOptions2
-  );
+    if (el) {
+      return bot.sendMessage(
+        chatId,
+        `Последняя застройка: \n${el.title}.\n${el.dateBuild} \nДля подробной информации кликнете по кнопке ниже:`,
+        btnOptions2
+      );
+    } else {
+      return bot.sendMessage(chatId, `Ошибка при выполнении команды. Попробуйте позже`);
+    }
+  } catch (err) {
+    console.error('Error tgBot getLastElem', err.message);
+  }
 };
 
 start();
