@@ -9,7 +9,7 @@ export const htmlParser = (html) => {
     const dataArr = [];
     const count = $('div.content > table > tbody > tr > td > strong').length;
 
-    // write objects data in dataArr
+    // write object data in dataArr
     for (let i = 0; i <= count; i++) {
       const trItem = $('div.content > table > tbody > tr').eq(i);
       const dateBuild = trItem.find('td').eq(1).find("p:contains('Дата начала продаж')");
@@ -20,7 +20,7 @@ export const htmlParser = (html) => {
         dataArr.push({ data, table });
       }
     }
-    return dataArr;
+    return dataArr.reverse();
   };
   return getDataBuild();
 };

@@ -22,7 +22,7 @@ const ItemSchema = new mongoose.Schema({
 
 const BuildingsSchema = new mongoose.Schema({
   userId: { type: Number },
-  items: [{ type: [ItemSchema], default: [] }],
+  items: [ItemSchema],
 });
 
 export const Buildings = mongoose.model('Buildings', BuildingsSchema);

@@ -1,12 +1,14 @@
 import express from 'express';
 import cors from 'cors';
 import httpClient from './utils/httpClient.mjs';
-import filterAndWriteJson from './utils/filterAndWriteJson.mjs';
 import { htmlParser } from '../src/services/parser/htmlParser.mjs';
 import getLastEl from './utils/getLastElement.mjs';
 import checkUser from './utils/checkUser.mjs';
 import mongoose from 'mongoose';
 import createUser from './utils/createUser.mjs';
+import getUserDb from './utils/getUserDb.mjs';
+import compareData from './utils/compareData.mjs';
+import addElemDb from './utils/addElemDb.mjs';
 
 const app = express();
 app.use(express.json());
@@ -19,18 +21,23 @@ mongoose
   .catch((err) => console.log(err));
 
 const processingData = async (req, res) => {
-  // const savedData = db.save(parsedData);
-
   try {
+    const userIdTg = req.query.userId;
+    const userDataDb = await getUserDb(userIdTg);
+
     // parsing
     const dataFromGrB = await httpClient.get('ru/construction/price_apartments/');
     const parsedData = htmlParser(dataFromGrB.data);
 
-    // check user in DB
+    // сравнение данных из БД, распарсенные данные. Возвр нового элемента если он есть
+    const elemsArr = compareData(parsedData, userDataDb.items);
 
-    // check JSON file
-    // const newEl = await filterAndWriteJson(parsedData);
-    // res.json({ message: newEl });
+    // добавление нового элемента юзеру в БД и возврат его в тг бот
+    if (elemsArr.length > 0) {
+      addElemDb(elemsArr, userDataDb._id);
+    }
+
+    res.json({ message: elemsArr });
   } catch (err) {
     console.log(err.message);
     res.status(400).send('Not Found');
@@ -48,14 +55,13 @@ const lastEl = async (req, res) => {
 };
 
 const verifyOrCreateUser = async (req, res) => {
-  const userId = req.body.userId;
-
   try {
-    const isExistsUser = await checkUser(userId);
+    const userIdTg = req.body.userId;
+    const isExistsUser = await checkUser(userIdTg);
     if (!isExistsUser) {
       const dataFromGrB = await httpClient.get('ru/construction/price_apartments/');
       const parsedData = htmlParser(dataFromGrB.data);
-      createUser(parsedData, userId);
+      createUser(parsedData, userIdTg);
     }
   } catch (err) {
     console.error('Error verify user:', err.message);
@@ -68,8 +74,3 @@ app.get('/last', lastEl);
 app.post('/addUser', verifyOrCreateUser);
 
 app.listen(5000, () => console.log('Сервер работает'));
-
-// todo
-// 1. Modularization
-// 2. Save data to JSON
-// 3. Replace JSON with DataBase(MongoDB, ODB use Moongoose)

@@ -76,6 +76,7 @@ const checkNewEl = async (chat, userId) => {
   }
 
   if (elmsArr.length === 0) {
+    // Здесь потом будет пустота
     bot.sendMessage(chatId, `Новых застроек не появилось`);
   } else {
     elmsArr.forEach((item) => {
