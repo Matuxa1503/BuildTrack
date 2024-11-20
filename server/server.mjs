@@ -9,6 +9,7 @@ import createUser from './utils/createUser.mjs';
 import getUserDb from './utils/getUserDb.mjs';
 import compareData from './utils/compareData.mjs';
 import addElemDb from './utils/addElemDb.mjs';
+import deleteUserDb from './utils/deleteUserDb.mjs';
 
 const app = express();
 app.use(express.json());
@@ -31,7 +32,6 @@ const processingData = async (req, res) => {
 
     // сравнение данных из БД, распарсенные данные. Возвр нового элемента если он есть
     const elemsArr = compareData(parsedData, userDataDb.items);
-
     // добавление нового элемента юзеру в БД и возврат его в тг бот
     if (elemsArr.length > 0) {
       addElemDb(elemsArr, userDataDb._id);
@@ -71,8 +71,20 @@ const verifyOrCreateUser = async (req, res) => {
   }
 };
 
+const deleteUser = async (req, res) => {
+  try {
+    const userIdTg = req.body.userId;
+    const isDeleted = deleteUserDb(userIdTg);
+    isDeleted ? res.status(200).send('user delete') : res.status(404);
+  } catch (err) {
+    console.error('Error delete user:', err.message);
+    res.status(404).send('Not Found');
+  }
+};
+
 app.get('/', processingData);
 app.get('/last', lastEl);
 app.post('/addUser', verifyOrCreateUser);
+app.delete('/deleteUser', deleteUser);
 
 app.listen(5000, () => console.log('Сервер работает'));

@@ -4,10 +4,11 @@ import TelegramApi from 'node-telegram-bot-api';
 const token = '7040303091:AAHK8jESpMxqrKnkyhGSrZVGGJWwL5IMSjE';
 const bot = new TelegramApi(token, { polling: true });
 let intervalStarted = false;
+let ourInterval;
 
 const btnOptions = {
   reply_markup: JSON.stringify({
-    inline_keyboard: [[{ text: 'Получить информацию о последней добавленной застройке', callback_data: 'prev-buildings' }]],
+    inline_keyboard: [[{ text: 'Получить информацию о последней застройке', callback_data: 'last-buildings' }]],
   }),
 };
 
@@ -24,12 +25,12 @@ const start = () => {
     const userId = msg.from.id;
     bot.setMyCommands([{ command: '/last', description: 'Информация о последней добавленной застройке' }]);
 
-    // if (!intervalStarted) {
-    //   intervalStarted = true;
-    //   setInterval(async () => {
-    //     checkNewEl(chatId);
-    //   }, 5000);
-    // }
+    if (!intervalStarted) {
+      intervalStarted = true;
+      ourInterval = setInterval(() => {
+        checkNewEl(chatId, userId);
+      }, 10000);
+    }
 
     if (text === '/start') {
       checkUserDb(userId);
@@ -51,8 +52,8 @@ const start = () => {
 };
 
 bot.on('callback_query', async (msg) => {
-  if (msg.data === 'prev-buildings') {
-    getLastEl(msg.message.chat.id);
+  if (msg.data === 'last-buildings') {
+    getLastEl(msg.message.chat.id, msg.from.id);
   }
 });
 
@@ -60,7 +61,7 @@ const checkUserDb = async (userId) => {
   try {
     await axios.post('http://localhost:5000/addUser', { userId });
   } catch (err) {
-    console.error('Error tgBot checkUserDb', err.message);
+    console.error('Error tgBot checkUserDb:', err.message);
   }
 };
 
@@ -73,17 +74,34 @@ const checkNewEl = async (chat, userId) => {
 
     if (elmsArr.length === 0) {
       // Здесь потом будет пустота
-      bot.sendMessage(chatId, `Новых застроек не появилось`);
+      console.log('da');
+      return bot.sendMessage(chatId, `Новых застроек не появилось`);
     } else {
       elmsArr.forEach((item) => {
-        return bot.sendMessage(
-          chatId,
-          `Появилась новая застройка: \n${item.data.title}.\n${item.data.dateBuild} \nДля подробной информации кликнете по кнопке ниже:`
-        );
+        return bot
+          .sendMessage(
+            chatId,
+            `Появилась новая застройка: \n${item.data.title}.\n${item.data.dateBuild} \nДля подробной информации кликнете по кнопке ниже:`
+          )
+          .catch(async (err) => {
+            if (err.response && err.response.statusCode === 403) {
+              clearInterval(ourInterval);
+              intervalStarted = false;
+              ourInterval = null;
+              console.log('interval was stoped');
+
+              try {
+                const response = await axios.delete('http://localhost:5000/deleteUser', { data: { userId } });
+                console.log(response.data);
+              } catch (err) {
+                console.error('Error delete user tgBot:', err.message);
+              }
+            }
+          });
       });
     }
   } catch (err) {
-    console.error('Error tgBot checkNewEl', err.message);
+    console.error('Error tgBot checkNewEl:', err.message);
   }
 };
 
@@ -104,7 +122,7 @@ const getLastEl = async (chat, userId) => {
       return bot.sendMessage(chatId, `Ошибка при выполнении команды. Попробуйте позже`);
     }
   } catch (err) {
-    console.error('Error tgBot getLastElem', err.message);
+    console.error('Error tgBot getLastElem:', err.message);
   }
 };
 
