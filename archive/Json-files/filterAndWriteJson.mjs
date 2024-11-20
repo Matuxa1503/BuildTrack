@@ -12,8 +12,8 @@ const filterAndWriteJson = async (parsedData) => {
   if (hasJson) {
     const readData = await readFile(pathJson);
     const newEl = await elemsFromData(parsedData, readData);
-    // await writeFile(pathJson, parsedData);
-    // return newEl;
+    await writeFile(pathJson, parsedData);
+    return newEl;
   } else {
     await writeFile(pathJson, parsedData);
     return [];
