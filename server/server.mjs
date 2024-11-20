@@ -1,84 +1,68 @@
 import express from 'express';
 import cors from 'cors';
-import httpClient from './utils/httpClient.mjs';
-import { htmlParser } from '../src/services/parser/htmlParser.mjs';
-import getLastEl from './utils/getLastEl.mjs';
-import checkUser from './utils/checkUser.mjs';
-import mongoose from 'mongoose';
-import createUser from './utils/createUser.mjs';
+import lastElemDb from './utils/lastElemDb.mjs';
+import createUserDb from './utils/createUserDb.mjs';
 import getUserDb from './utils/getUserDb.mjs';
 import compareData from './utils/compareData.mjs';
 import addElemDb from './utils/addElemDb.mjs';
 import deleteUserDb from './utils/deleteUserDb.mjs';
+import connectDb from './utils/connectDB.mjs';
+import parser from '../src/services/parser/parser.mjs';
+import checkUserDb from './utils/checkUserDb.mjs';
 
 const app = express();
 app.use(express.json());
 app.use(cors());
-
-const URL = 'mongodb://localhost:27017/BuildingsData';
-mongoose
-  .connect(URL)
-  .then(console.log('Connect to MongoDB'))
-  .catch((err) => console.log(err));
+connectDb();
 
 const processingData = async (req, res) => {
   try {
     const userIdTg = req.query.userId;
     const userDataDb = await getUserDb(userIdTg);
-
-    // parsing
-    const dataFromGrB = await httpClient.get('ru/construction/price_apartments/');
-    const parsedData = htmlParser(dataFromGrB.data);
-
-    // сравнение данных из БД, распарсенные данные. Возвр нового элемента если он есть
-    const elemsArr = compareData(parsedData, userDataDb.items);
-    // добавление нового элемента юзеру в БД и возврат его в тг бот
+    const parsedData = await parser();
+    const elemsArr = compareData(parsedData, userDataDb.items); // compare parsedData and userDataDb. Return new data if there are any
     if (elemsArr.length > 0) {
-      addElemDb(elemsArr, userDataDb._id);
+      addElemDb(elemsArr, userDataDb._id); // add new user in DB
     }
-
-    res.json({ message: elemsArr });
+    res.status(200).json({ message: elemsArr }); // return data in tg
   } catch (err) {
-    console.log(err.message);
-    res.status(400).send('Not Found');
+    console.error('Error in processingData:', err.message);
+    res.status(400).send('An error occurred');
   }
 };
 
 const lastEl = async (req, res) => {
   try {
     const userIdTg = req.query.userId;
-    const el = await getLastEl(userIdTg);
-
+    const el = await lastElemDb(userIdTg);
     res.json({ message: el });
   } catch (err) {
-    console.log(err.message);
-    res.status(400).send('Not Found');
+    console.error('Error in lastEl:', err.message);
+    res.status(400).send('An error occurred');
   }
 };
 
 const verifyOrCreateUser = async (req, res) => {
   try {
     const userIdTg = req.body.userId;
-    const isExistsUser = await checkUser(userIdTg);
+    const isExistsUser = await checkUserDb(userIdTg);
     if (!isExistsUser) {
-      const dataFromGrB = await httpClient.get('ru/construction/price_apartments/');
-      const parsedData = htmlParser(dataFromGrB.data);
-      createUser(parsedData, userIdTg);
+      const parsedData = await parser();
+      createUserDb(parsedData, userIdTg);
     }
   } catch (err) {
-    console.error('Error verify user:', err.message);
-    res.status(404).send('Not Found');
+    console.error('Error in verifyOrCreateUser:', err.message);
+    res.status(400).send('An error occurred');
   }
 };
 
 const deleteUser = async (req, res) => {
   try {
     const userIdTg = req.body.userId;
-    const isDeleted = deleteUserDb(userIdTg);
-    isDeleted ? res.status(200).send('user delete') : res.status(404);
+    deleteUserDb(userIdTg);
   } catch (err) {
-    console.error('Error delete user:', err.message);
-    res.status(404).send('Not Found');
+    console.error('Error in deleteUser:', err.message);
+    res.status(400).send('An error occurred');
   }
 };
 

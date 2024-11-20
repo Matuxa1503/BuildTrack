@@ -8,7 +8,7 @@ const addElemDb = async (elemsArr, id) => {
       await Buildings.findByIdAndUpdate(id, { $push: { items: building } }, { new: true });
     }
   } catch (err) {
-    console.error('Error adding elements:', err.message);
+    console.error('Error adding elements in Db:', err.message);
   }
 };
 
