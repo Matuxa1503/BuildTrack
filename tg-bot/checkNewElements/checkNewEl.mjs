@@ -1,5 +1,6 @@
 import axios from 'axios';
 import sendBuildingMessage from './sendBuildingMessage.mjs';
+import handle403Error from '../handle403Error.mjs';
 
 const checkNewEl = async (bot, chat, userId) => {
   try {
@@ -8,9 +9,9 @@ const checkNewEl = async (bot, chat, userId) => {
     const elemsArr = response.data.message;
 
     if (elemsArr.length === 0) {
-      // Здесь потом будет пустота
-      console.log('нет новых элементов');
-      return bot.sendMessage(chatId, `Новых застроек не появилось`);
+      return bot.sendMessage(chatId, 'Новых застроек не появилось').catch((err) => {
+        handle403Error(err, userId);
+      });
     }
 
     if (elemsArr.length > 0) {

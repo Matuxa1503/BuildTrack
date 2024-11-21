@@ -1,5 +1,4 @@
-import deleteUser from '../deleteUser.mjs';
-import { stopInterval } from '../intervalManager.mjs';
+import handle403Error from '../handle403Error.mjs';
 
 const sendBuildingMessage = (bot, chatId, userId, item) => {
   return bot
@@ -7,11 +6,8 @@ const sendBuildingMessage = (bot, chatId, userId, item) => {
       chatId,
       `Появилась новая застройка: \n${item.data.title}.\n${item.data.dateBuild} \nДля подробной информации кликнете по кнопке ниже:`
     )
-    .catch(async (err) => {
-      if (err.response && err.response.statusCode === 403) {
-        stopInterval();
-        deleteUser(userId);
-      }
+    .catch((err) => {
+      handle403Error(err, userId);
     });
 };
 
