@@ -1,4 +1,4 @@
-import s from './App.module.css';
+import s from './styles/App.module.css';
 
 const AppTable = ({ table }) => {
   const header = table.header;
