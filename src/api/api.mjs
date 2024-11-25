@@ -1,8 +1,7 @@
 import axios from 'axios';
 
-export const httpClient = axios.create({
-  baseURL: 'http://www.ghb.by/',
-});
+// export const httpClient = axios.create({
+// });
 
 export const getElemFromDbAPI = async (userId, itemLink) => {
   try {
@@ -10,5 +9,14 @@ export const getElemFromDbAPI = async (userId, itemLink) => {
     return response;
   } catch (err) {
     console.log(err);
+  }
+};
+
+export const getDataFromGrBuildAPI = async () => {
+  try {
+    const response = await axios.get('http://www.ghb.by/ru/construction/price_apartments/');
+    return response;
+  } catch (err) {
+    console.log(err.message);
   }
 };
