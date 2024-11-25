@@ -1,11 +1,11 @@
-import axios from 'axios';
 import sendBuildingMessage from './sendBuildingMessage.mjs';
 import handle403Error from '../handle403Error.mjs';
+import { checkNewElAPI } from '../../src/api/api.mjs';
 
 const checkNewEl = async (bot, chat, userId) => {
   try {
     const chatId = chat;
-    const response = await axios.get('http://localhost:5000/', { params: { userId } });
+    const response = await checkNewElAPI(userId);
     const elemsArr = response.data.message;
 
     if (elemsArr.length > 0) {

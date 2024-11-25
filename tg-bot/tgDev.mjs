@@ -1,7 +1,7 @@
 import TelegramApi from 'node-telegram-bot-api';
-import checkUser from './checkUser.mjs';
 import getLastElement from './getLastElement.mjs';
 import { startInterval } from './intervalManager.mjs';
+import { checkUserAPI } from '../src/api/api.mjs';
 
 const token = '7040303091:AAHK8jESpMxqrKnkyhGSrZVGGJWwL5IMSjE';
 const bot = new TelegramApi(token, { polling: true });
@@ -21,7 +21,7 @@ const start = () => {
     bot.setMyCommands([{ command: '/last', description: 'Информация о последней застройке' }]);
 
     if (text === '/start') {
-      checkUser(userId);
+      checkUserAPI(userId);
       startInterval(bot, chatId, userId);
 
       return bot.sendMessage(
