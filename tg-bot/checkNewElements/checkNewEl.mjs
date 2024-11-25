@@ -8,15 +8,15 @@ const checkNewEl = async (bot, chat, userId) => {
     const response = await axios.get('http://localhost:5000/', { params: { userId } });
     const elemsArr = response.data.message;
 
-    if (elemsArr.length === 0) {
-      return bot.sendMessage(chatId, 'Новых застроек не появилось').catch((err) => {
-        handle403Error(err, userId);
-      });
-    }
-
     if (elemsArr.length > 0) {
       elemsArr.forEach((item) => {
         sendBuildingMessage(bot, chatId, userId, item);
+      });
+    }
+
+    if (elemsArr.length === 0) {
+      return bot.sendMessage(chatId, 'Новых застроек не появилось').catch((err) => {
+        handle403Error(err, userId);
       });
     }
   } catch (err) {

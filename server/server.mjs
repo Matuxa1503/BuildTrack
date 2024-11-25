@@ -9,6 +9,7 @@ import deleteUserDb from './utils/deleteUserDb.mjs';
 import connectDb from './utils/connectDB.mjs';
 import parser from '../src/services/parser/parser.mjs';
 import checkUserDb from './utils/checkUserDb.mjs';
+import docUserDb from './utils/docUserDb.mjs';
 
 const app = express();
 app.use(express.json());
@@ -22,7 +23,7 @@ const processingData = async (req, res) => {
     const parsedData = await parser();
     const elemsArr = compareData(parsedData, userDataDb.items); // compare parsedData and userDataDb. Return new data if there are any
     if (elemsArr.length > 0) {
-      addElemDb(elemsArr, userDataDb._id); // add new user in DB
+      await addElemDb(elemsArr, userDataDb._id); // add new user in DB
     }
     res.status(200).json({ message: elemsArr }); // return data in tg
   } catch (err) {
@@ -66,9 +67,22 @@ const deleteUser = async (req, res) => {
   }
 };
 
+const itemUser = async (req, res) => {
+  try {
+    const userIdTg = req.body.userId;
+    const link = req.body.itemLink;
+    const el = await docUserDb(userIdTg, link);
+    res.json({ message: el });
+  } catch (err) {
+    console.error('Error in itemUser:', err.message);
+    res.status(400).send('An error occurred');
+  }
+};
+
 app.get('/', processingData);
 app.get('/last', lastEl);
 app.post('/addUser', verifyOrCreateUser);
+app.post('/itemUser', itemUser);
 app.delete('/deleteUser', deleteUser);
 
 app.listen(5000, () => console.log('Сервер работает'));
