@@ -60,7 +60,7 @@ const verifyOrCreateUser = async (req, res) => {
 const deleteUser = async (req, res) => {
   try {
     const userIdTg = req.body.userId;
-    deleteUserDb(userIdTg);
+    await deleteUserDb(userIdTg);
   } catch (err) {
     console.error('Error in deleteUser:', err.message);
     res.status(400).send('An error occurred');

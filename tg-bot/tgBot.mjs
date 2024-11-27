@@ -3,7 +3,8 @@ import getLastElement from './getLastElement.mjs';
 import { startInterval } from './intervalManager.mjs';
 import { checkUserAPI } from '../src/api/api.mjs';
 
-const token = '7040303091:AAHK8jESpMxqrKnkyhGSrZVGGJWwL5IMSjE';
+// '7040303091:AAHK8jESpMxqrKnkyhGSrZVGGJWwL5IMSjE' devTgBot
+const token = '7244567882:AAHgGVxxk8Z2eosdLBJP44ja73UCMLhCXIY';
 const bot = new TelegramApi(token, { polling: true });
 
 const btnOptions = {

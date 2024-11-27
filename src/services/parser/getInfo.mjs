@@ -7,7 +7,7 @@ const getInfoData = (dateBuild, $) => {
     .map((index, element) => {
       return $(element).text().trim();
     })
-    .get() // get() преобразует jQuery объект в обычный массив
+    .get() // convert Jquery object in array
     .reverse();
 
   return { title: title.text().trim(), dateBuild: dateBuild.text().trim(), link, someInfoBuild };

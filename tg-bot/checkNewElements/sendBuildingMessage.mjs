@@ -9,7 +9,7 @@ const sendBuildingMessage = async (bot, chatId, userId, item) => {
       btnOptions(item.data.link, userId)
     )
     .catch((err) => {
-      console.log(err.message);
+      console.error('Error in sendBuildingMessage:', err.message);
       handle403Error(err, userId);
     });
 };

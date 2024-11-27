@@ -6,21 +6,19 @@ const checkNewEl = async (bot, chat, userId) => {
   try {
     const chatId = chat;
     const response = await checkNewElAPI(userId);
-    const elemsArr = response.data.message;
+    const elemsArr = response?.data?.message || '';
 
     if (elemsArr.length > 0) {
-      elemsArr.forEach((item) => {
-        sendBuildingMessage(bot, chatId, userId, item);
+      elemsArr.forEach(async (item) => {
+        await sendBuildingMessage(bot, chatId, userId, item);
       });
-    }
-
-    if (elemsArr.length === 0) {
+    } else {
       return bot.sendMessage(chatId, 'Новых застроек не появилось').catch((err) => {
         handle403Error(err, userId);
       });
     }
   } catch (err) {
-    console.error('Error tgBot checkNewEl:', err.message);
+    console.error('Error in checkNewEl:', err.message);
   }
 };
 

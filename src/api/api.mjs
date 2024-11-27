@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const httpClient = axios.create({
+export const httpService = axios.create({
   baseURL: 'http://localhost:5000',
 });
 
@@ -15,7 +15,7 @@ export const getDataFromGrBuildAPI = async () => {
 
 export const getLastElementAPI = async (userId) => {
   try {
-    const response = await httpClient.get('/last', { params: { userId } });
+    const response = await httpService.get('/last', { params: { userId } });
     return response;
   } catch (err) {
     console.error('Error getLastElementAPI:', err.message);
@@ -24,7 +24,7 @@ export const getLastElementAPI = async (userId) => {
 
 export const checkNewElAPI = async (userId) => {
   try {
-    const response = await httpClient.get('/', { params: { userId } });
+    const response = await httpService.get('/', { params: { userId } });
     return response;
   } catch (err) {
     console.error('Error checkNewElAPI:', err.message);
@@ -33,7 +33,7 @@ export const checkNewElAPI = async (userId) => {
 
 export const checkUserAPI = async (userId) => {
   try {
-    await httpClient.post('/addUser', { userId });
+    await httpService.post('/addUser', { userId });
   } catch (err) {
     console.error('Error checkUserAPI:', err.message);
   }
@@ -41,7 +41,7 @@ export const checkUserAPI = async (userId) => {
 
 export const getElemFromDbAPI = async (userId, itemLink) => {
   try {
-    const response = await httpClient.post('/itemUser', { userId, itemLink }); // for security use POST instead GET
+    const response = await httpService.post('/itemUser', { userId, itemLink }); // for security use POST instead GET
     return response;
   } catch (err) {
     console.error('Error getElemFromDbAPI:', err.message);
@@ -50,7 +50,7 @@ export const getElemFromDbAPI = async (userId, itemLink) => {
 
 export const deleteUserAPI = async (userId) => {
   try {
-    await httpClient.delete('/deleteUser', { data: { userId } });
+    await httpService.delete('/deleteUser', { data: { userId } });
   } catch (err) {
     console.error('Error deleteUserAPI:', err.message);
   }
