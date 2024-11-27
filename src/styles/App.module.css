@@ -1,0 +1,153 @@
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.wrapper {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: url('https://i.pinimg.com/originals/3e/11/56/3e1156d0a3eb1b6e9ee5820bc47d74d4.jpg');
+}
+
+.container {
+  max-width: 1440px;
+  margin: 10px auto;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.title {
+  font-size: 38px;
+  font-weight: 400;
+  margin-bottom: 30px;
+  color: orange;
+}
+
+.subtitle {
+  font-size: 24px;
+  font-weight: 300;
+  color: orange;
+}
+
+.info {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.info-0 {
+  color: rgb(255, 255, 255);
+  margin-bottom: 20px;
+}
+
+.table {
+  margin: 20px auto 0px;
+  text-align: center;
+  border-collapse: collapse;
+  color: #fff;
+}
+
+.table th {
+  border: 2px solid orange;
+  font-weight: 400;
+  color: #fff;
+  padding: 15px;
+}
+
+.table td {
+  border: 1px solid #fff;
+  padding: 15px;
+}
+
+.thUpper::first-letter {
+  text-transform: uppercase;
+}
+
+.btn {
+  display: inline-block;
+  margin-top: 40px;
+  background: none;
+  color: aliceblue;
+  border: 2px solid #fff;
+  border-radius: 10px;
+  padding: 20px;
+  font-size: 30px;
+}
+
+.btn:hover {
+  background-color: aliceblue;
+  color: orange;
+  transition: all 0.5s;
+}
+
+.load {
+  font-size: 30px;
+  color: aliceblue;
+}
+
+@media (max-width: 720px) {
+  .title {
+    font-size: 24px;
+  }
+
+  .subtitle {
+    font-size: 16px;
+  }
+
+  .info {
+    font-size: 12px;
+  }
+
+  .btn {
+    font-size: 20px;
+    padding: 12px;
+  }
+
+  .table th {
+    font-size: 12px;
+    padding: 4px;
+  }
+
+  .table td {
+    font-size: 10px;
+    padding: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 16px;
+  }
+
+  .btn {
+    font-size: 14px;
+    padding: 6px;
+  }
+
+  .table th {
+    font-size: 8px;
+    padding: 2px;
+  }
+
+  .table td {
+    font-size: 6px;
+    padding: 2px;
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.icon {
+  width: 100px;
+  margin-top: 30px;
+  animation: rotate 2s linear infinite;
+}

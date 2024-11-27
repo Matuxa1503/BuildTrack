@@ -11,23 +11,20 @@
     "cors": "^2.8.5",
     "express": "^4.21.0",
     "http-proxy-middleware": "^3.0.0",
-    "ngrok": "^5.0.0-beta.2",
+    "mongodb": "^6.10.0",
+    "mongoose": "^8.8.1",
     "node-telegram-bot-api": "^0.66.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-router-dom": "^7.0.1",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "client": "react-scripts start",
     "server": "nodemon server/server.mjs",
-    "tgBot": "nodemon tg_bot/tg.mjs",
-    "ngrokReact": "ngrok http 3000",
-    "serveoServer": "ssh -R 80:localhost:5000 serveo.net",
-    "dev": "concurrently \"npm run client\" \"npm run server\" \"npm run tgBot\" \"npm run serveoServer\"",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "tgBot": "nodemon tg-bot/tgBot.mjs",
+    "dev": "concurrently \"npm run client\" \"npm run server\" \"npm run tgBot\""
   },
   "eslintConfig": {
     "extends": [
@@ -45,11 +42,6 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
-    ]
-  },
-  "jest": {
-    "transformIgnorePatterns": [
-      "node_modules/(?!(axios))"
     ]
   },
   "devDependencies": {

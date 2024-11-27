@@ -1,101 +1,88 @@
 import express from 'express';
-import path from 'path';
-import fs from 'fs/promises';
 import cors from 'cors';
-import axios from 'axios';
-import * as cheerio from 'cheerio';
-
-const __dirname = path.resolve();
+import lastElemDb from './utils/lastElemDb.mjs';
+import createUserDb from './utils/createUserDb.mjs';
+import getUserDb from './utils/getUserDb.mjs';
+import compareData from './utils/compareData.mjs';
+import addElemDb from './utils/addElemDb.mjs';
+import deleteUserDb from './utils/deleteUserDb.mjs';
+import connectDb from './utils/connectDB.mjs';
+import parser from '../src/services/parser/parser.mjs';
+import checkUserDb from './utils/checkUserDb.mjs';
+import docUserDb from './utils/docUserDb.mjs';
 
 const app = express();
 app.use(express.json());
 app.use(cors());
+connectDb();
 
-app.get('/', async (req, res) => {
+const processingData = async (req, res) => {
   try {
-    const response = await axios.get('http://www.ghb.by/ru/construction/price_apartments/');
-    const dataBuild = parseHtml(response.data);
+    const userIdTg = req.query.userId;
+    const userDataDb = await getUserDb(userIdTg);
+    const parsedData = await parser();
+    const elemsArr = compareData(parsedData, userDataDb.items); // compare parsedData and userDataDb. Return new data if there are any
+    if (elemsArr.length > 0) {
+      await addElemDb(elemsArr, userDataDb._id); // add new user in DB
+    }
+    res.status(200).json({ message: elemsArr }); // return data in tg
+  } catch (err) {
+    console.error('Error in processingData:', err.message);
+    res.status(400).send('An error occurred');
+  }
+};
 
-    // данные текстового файла data.txt
-    let dataFileTxt = '';
+const lastEl = async (req, res) => {
+  try {
+    const userIdTg = req.query.userId;
+    const el = await lastElemDb(userIdTg);
+    res.json({ message: el });
+  } catch (err) {
+    console.error('Error in lastEl:', err.message);
+    res.status(400).send('An error occurred');
+  }
+};
 
-    // Если данные пришли с сервера, проверяем пустой ли у нас data.txt. Если пустой закидываем данные из dataBuild,
-    // в противном случае забираем данные с data.txt и сравниваем с данными сервера. Достаем новые элементы если они есть в getNewElementsBuild
-    if (dataBuild) {
-      const dataFile = await getDataFile(path.join(__dirname, 'src', 'data.txt'));
-      dataFileTxt = dataFile ? JSON.parse(dataFile) : '';
-
-      if (dataFileTxt === '') {
-        writeDataFile(dataBuild);
-      } else {
-        const newElementsBuild = dataBuild.filter((buildItem) => !dataFileTxt.some((textItem) => textItem.link === buildItem.link));
-        writeDataFile(dataBuild);
-        res.json({ message: newElementsBuild });
-      }
+const verifyOrCreateUser = async (req, res) => {
+  try {
+    const userIdTg = req.body.userId;
+    const isExistsUser = await checkUserDb(userIdTg);
+    if (!isExistsUser) {
+      const parsedData = await parser();
+      createUserDb(parsedData, userIdTg);
     }
   } catch (err) {
-    console.log(err);
-    res.status(400).send('Not Found');
-  }
-});
-
-app.get('/last-element', async (req, res) => {
-  try {
-    let lastElementData;
-    const getData = await getDataFile(path.join(__dirname, 'src', 'data.txt'));
-
-    lastElementData = getData ? JSON.parse(getData)[0] : '';
-    res.json({ message: lastElementData });
-  } catch (err) {
-    console.log(err);
-  }
-});
-
-const writeDataFile = async (data) => {
-  try {
-    await fs.writeFile(path.join(__dirname, 'src', 'data.txt'), JSON.stringify(data), 'utf-8');
-  } catch (err) {
-    return console.log(err);
+    console.error('Error in verifyOrCreateUser:', err.message);
+    res.status(400).send('An error occurred');
   }
 };
 
-const getDataFile = async (path) => {
+const deleteUser = async (req, res) => {
   try {
-    const dataFile = await fs.readFile(path, 'utf-8');
-    return dataFile;
+    const userIdTg = req.body.userId;
+    await deleteUserDb(userIdTg);
   } catch (err) {
-    console.log(err);
-    return '';
+    console.error('Error in deleteUser:', err.message);
+    res.status(400).send('An error occurred');
   }
 };
 
-const parseHtml = (data) => {
-  const $ = cheerio.load(data);
-
-  const getDataBuild = () => {
-    const dataArr = [];
-    const countAnnounc = $('div.content > table > tbody > tr > td > strong').length;
-    for (let i = 0; i <= countAnnounc; i++) {
-      const trItem = $('div.content > table > tbody > tr').eq(i);
-      const dateBuild = trItem.find('td').eq(1).find("p:contains('Дата начала продаж')");
-      const dateBuildText = dateBuild.text();
-
-      if (Boolean(dateBuildText)) {
-        const title = dateBuild.siblings().find('h3 a');
-        const link = title.attr('href');
-        const threePrevious = dateBuild.prevAll('p').slice(0, 3);
-        const someInfoBuild = threePrevious
-          .map((index, element) => {
-            return $(element).text().trim();
-          })
-          .get() // get() преобразует jQuery объект в обычный массив
-          .reverse();
-        dataArr.push({ title: title.text(), dateBuildText, link, moreInfo: someInfoBuild });
-      }
-    }
-    return dataArr;
-  };
-  return getDataBuild();
+const itemUser = async (req, res) => {
+  try {
+    const userIdTg = req.body.userId;
+    const link = req.body.itemLink;
+    const el = await docUserDb(userIdTg, link);
+    res.json({ message: el });
+  } catch (err) {
+    console.error('Error in itemUser:', err.message);
+    res.status(400).send('An error occurred');
+  }
 };
+
+app.get('/', processingData);
+app.get('/last', lastEl);
+app.post('/addUser', verifyOrCreateUser);
+app.post('/itemUser', itemUser);
+app.delete('/deleteUser', deleteUser);
 
 app.listen(5000, () => console.log('Сервер работает'));
