@@ -1,9 +1,9 @@
 import s from './styles/App.module.css';
 import { useCallback, useState } from 'react';
 import { useEffect } from 'react';
-import AppInfo from './AppInfo';
-import AppTable from './AppTable';
-import Button from './Button';
+import AppInfo from './components/AppInfo';
+import AppTable from './components/AppTable';
+import Button from './components/Button';
 import { useSearchParams } from 'react-router-dom';
 import { getElemFromDbAPI } from './api/api.mjs';
 

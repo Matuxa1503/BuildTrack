@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@vercel/node": "^3.2.27",
     "axios": "^1.7.6",
     "cheerio": "^1.0.0",
     "cors": "^2.8.5",
@@ -22,7 +23,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "server": "nodemon server/server.mjs",
+    "server": "nodemon api/server.mjs",
     "tgBot": "nodemon tg-bot/tgBot.mjs",
     "dev": "concurrently \"npm run start\" \"npm run server\" \"npm run tgBot\"",
     "build": "react-scripts build"
