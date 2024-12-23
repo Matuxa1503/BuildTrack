@@ -10,9 +10,9 @@ const checkNewEl = async (bot) => {
     const usersArr = response?.data?.users || '';
 
     if (elemsArr.length > 0) {
-      elemsArr.forEach(async (item) => {
+      for (const item of elemsArr) {
         await sendBuildingMessage(bot, usersArr, item);
-      });
+      }
     }
   } catch (err) {
     console.error('Error in checkNewEl:', err.message);
