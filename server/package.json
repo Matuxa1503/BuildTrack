@@ -13,12 +13,14 @@
     "node-telegram-bot-api": "^0.66.0"
   },
   "scripts": {
-    "server": "nodemon index.mjs",
+    "server": "nodemon server.mjs",
     "tgBot": "nodemon tg-bot/tgBot.mjs",
-    "dev": "concurrently \"npm run server\""
+    "dev": "concurrently \"npm run server\" \"npm run tgBot\"",
+    "tunnel": "lt --port 5000"
   },
   "devDependencies": {
     "concurrently": "^9.0.1",
+    "localtunnel": "^2.0.2",
     "nodemon": "^3.1.4"
   }
 }

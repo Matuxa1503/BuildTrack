@@ -1,5 +1,5 @@
-const compareData = (parsedData, userData) => {
-  return parsedData.filter((buildItem) => !userData.some((textItem) => textItem.data.link === buildItem.data.link));
+const compareData = (parsedData, dataBD) => {
+  return parsedData.filter((buildItem) => !dataBD.some((textItem) => textItem.data.link === buildItem.data.link));
 };
 
 export default compareData;

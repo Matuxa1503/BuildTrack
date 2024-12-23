@@ -1,8 +1,8 @@
-import { Buildings } from '../models/Buildings.mjs';
+import { Users } from '../models/Buildings.mjs';
 
 const checkUserDb = async (userId) => {
   try {
-    const isExists = await Buildings.findOne({ userId }); // Verify exists user in DB
+    const isExists = await Users.findOne({ userId }); // Verify exists user in DB
     return isExists ? true : false;
   } catch (err) {
     console.error('Error getting user from Db:', err.message);

@@ -1,25 +1,23 @@
 import { getLastElementAPI } from './api/api.mjs';
 import btnOptions from './btnOptions.mjs';
 
-const getLastElement = async (bot, chat, userId) => {
+const getLastElement = async (bot, chat) => {
   try {
     const chatId = chat;
-    const response = await getLastElementAPI(userId);
+    const response = await getLastElementAPI();
     const el = response?.data?.message?.items?.[0]?.data || null;
-    console.log(el);
 
     if (el) {
       return bot.sendMessage(
         chatId,
         `Последняя застройка: \n${el.title}.\n${el.dateBuild} \nДля подробной информации кликнете по кнопке ниже:`,
-        btnOptions(el.link, userId)
+        btnOptions(el.link)
       );
     } else {
       return bot.sendMessage(chatId, `Ошибка при выполнении команды. Попробуйте позже`);
     }
   } catch (err) {
     console.error('Error tgBot getLastElem:', err.message);
-    return bot.sendMessage(chat, 'Произошла ошибка. Пожалуйста, попробуйте позже.');
   }
 };
 

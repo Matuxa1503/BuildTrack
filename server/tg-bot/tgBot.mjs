@@ -1,8 +1,9 @@
 import TelegramApi from 'node-telegram-bot-api';
 import getLastElement from './getLastElement.mjs';
-import { startInterval } from './intervalManager.mjs';
 import { checkUserAPI } from './api/api.mjs';
 import botWebhook from './botWebhook.mjs';
+import checkNewEl from './checkNewElements/checkNewEl.mjs';
+import cron from './cron.mjs';
 
 const token = '7244567882:AAHgGVxxk8Z2eosdLBJP44ja73UCMLhCXIY';
 const bot = new TelegramApi(token, { polling: false });
@@ -21,8 +22,7 @@ export const nextTg = async (text, chatId, userId) => {
   bot.setMyCommands([{ command: '/last', description: 'Информация о последней застройке' }]);
 
   if (text === '/start') {
-    checkUserAPI(userId);
-    startInterval(bot, chatId, userId);
+    await checkUserAPI(userId, chatId);
 
     return bot.sendMessage(
       chatId,
@@ -32,8 +32,11 @@ export const nextTg = async (text, chatId, userId) => {
   }
 
   if (text === '/last') {
-    console.log('last func', text);
     await getLastElement(bot, chatId, userId);
+  }
+
+  if (text === '/time') {
+    await cron();
   }
 
   // bot.on('callback_query', async (msg) => {
@@ -43,4 +46,6 @@ export const nextTg = async (text, chatId, userId) => {
   // });
 };
 
-// '7040303091:AAHK8jESpMxqrKnkyhGSrZVGGJWwL5IMSjE' devTgBot
+export const handleCronJob = async () => {
+  await checkNewEl(bot);
+};

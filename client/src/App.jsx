@@ -13,23 +13,22 @@ const App = () => {
   const [searchParams] = useSearchParams();
 
   const itemLink = decodeURIComponent(searchParams.get('link')) || '';
-  const userId = decodeURIComponent(searchParams.get('user')) || '';
 
   const fetchData = useCallback(async () => {
-    if (!userId || !itemLink) {
+    if (!itemLink) {
       setIsLoading(false);
       throw new Error('Missing required parameters: user or link');
     }
 
     try {
-      const response = await getElemFromDbAPI(userId, itemLink);
+      const response = await getElemFromDbAPI(itemLink);
       setItem(response.data.message);
     } catch (err) {
       console.log('Error in React App:', err.message);
     } finally {
       setIsLoading(false);
     }
-  }, [userId, itemLink]);
+  }, [itemLink]);
 
   useEffect(() => {
     fetchData();

@@ -20,10 +20,16 @@ const ItemSchema = new mongoose.Schema({
   },
 });
 
-const BuildingsSchema = new mongoose.Schema({
+const UsersSchema = new mongoose.Schema({
   userId: { type: Number },
+  chatId: { type: Number },
+});
+
+const BuildingsSchema = new mongoose.Schema({
+  // userId: { type: Number },
   items: [ItemSchema],
 });
 
 export const Buildings = mongoose.model('Buildings', BuildingsSchema);
+export const Users = mongoose.model('Users', UsersSchema);
 export const BuildingItem = mongoose.model('BuildingItem', ItemSchema);

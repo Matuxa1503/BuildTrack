@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 const botWebhook = async (token) => {
-  const WEBHOOK_URL = 'https://server-eight-sepia.vercel.app/webhook';
+  const WEBHOOK_URL = 'https://server-kappa-steel.vercel.app/webhook';
 
   const setWebhook = async () => {
     try {
-      const response = await axios.post(`https://api.telegram.org/bot${token}/setWebhook`, {
+      await axios.post(`https://api.telegram.org/bot${token}/setWebhook`, {
         url: WEBHOOK_URL,
       });
     } catch (error) {

@@ -1,9 +1,9 @@
-import getUserDb from './getUserDb.mjs';
+import getBuildingsDb from './getBuildingsDb.mjs';
 
-const docUserDb = async (userId, link) => {
+const docUserDb = async (link) => {
   try {
-    const user = await getUserDb(userId);
-    const document = user.items.find((item) => item.data.link === link);
+    const buildings = await getBuildingsDb();
+    const document = buildings.items.find((item) => item.data.link === link);
     return document;
   } catch (err) {
     console.error('Error getting document from Db:', err.message);

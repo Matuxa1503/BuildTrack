@@ -2,19 +2,16 @@ import sendBuildingMessage from './sendBuildingMessage.mjs';
 import handle403Error from '../handle403Error.mjs';
 import { checkNewElAPI } from '../api/api.mjs';
 
-const checkNewEl = async (bot, chat, userId) => {
+const checkNewEl = async (bot) => {
   try {
-    const chatId = chat;
-    const response = await checkNewElAPI(userId);
+    // get users and new buildings
+    const response = await checkNewElAPI();
     const elemsArr = response?.data?.message || '';
+    const usersArr = response?.data?.users || '';
 
     if (elemsArr.length > 0) {
       elemsArr.forEach(async (item) => {
-        await sendBuildingMessage(bot, chatId, userId, item);
-      });
-    } else {
-      return bot.sendMessage(chatId, 'Новых застроек не появилось').catch((err) => {
-        handle403Error(err, userId);
+        await sendBuildingMessage(bot, usersArr, item);
       });
     }
   } catch (err) {
