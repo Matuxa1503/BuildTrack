@@ -8,6 +8,7 @@ import processingData from './routes/proc.mjs';
 import mongoConnect from './utils/mongoConnect.mjs';
 import { start } from './tg-bot/tgBot.mjs';
 import getWebhookTg from './routes/getWebhookTg.mjs';
+import cron from './routes/cron.mjs';
 
 const app = express();
 app.use(express.json());
@@ -20,6 +21,7 @@ app.get('/', (req, res) => {
 
 app.get('/proc', processingData);
 app.get('/last', lastEl);
+app.get('/cron', cron);
 app.post('/webhook', getWebhookTg);
 app.post('/addUser', verifyOrCreateUser);
 app.post('/itemUser', itemUser);

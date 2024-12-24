@@ -3,7 +3,6 @@ import getLastElement from './getLastElement.mjs';
 import { checkUserAPI } from './api/api.mjs';
 import botWebhook from './botWebhook.mjs';
 import checkNewEl from './checkNewElements/checkNewEl.mjs';
-import cron from './cron.mjs';
 
 const token = '7244567882:AAHgGVxxk8Z2eosdLBJP44ja73UCMLhCXIY';
 const bot = new TelegramApi(token, { polling: false });
@@ -33,10 +32,6 @@ export const nextTg = async (text, chatId, userId) => {
 
   if (text === '/last') {
     await getLastElement(bot, chatId, userId);
-  }
-
-  if (text === '/time') {
-    await cron();
   }
 
   // bot.on('callback_query', async (msg) => {
