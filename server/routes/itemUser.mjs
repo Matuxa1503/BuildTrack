@@ -2,7 +2,7 @@ import docUserDb from '../utils/docUserDb.mjs';
 
 const itemUser = async (req, res) => {
   try {
-    const link = req.body.itemLink;
+    const link = req.query.itemLink;
     const el = await docUserDb(link);
     res.status(200).json({ message: el });
   } catch (err) {

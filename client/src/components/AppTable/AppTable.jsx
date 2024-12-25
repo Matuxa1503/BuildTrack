@@ -1,4 +1,5 @@
-import s from '../styles/App.module.css';
+import g from '../../styles/Global.module.css';
+import s from './AppTable.module.css';
 
 const AppTable = ({ table }) => {
   const header = table.header;
@@ -24,9 +25,9 @@ const AppTable = ({ table }) => {
 
   return (
     <>
-      <h3 className={s.subtitle}>Таблица цен</h3>
+      <h3 className={g.subtitle}>Таблица цен</h3>
       <table className={s.table}>
-        <thead className={s.thead}>
+        <thead>
           <tr>
             <th rowSpan="2">{header[0].text}</th>
             <th rowSpan="2">{header[1].text}</th>

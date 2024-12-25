@@ -1,0 +1,46 @@
+.table {
+  margin: 20px auto 0px;
+  text-align: center;
+  border-collapse: collapse;
+  color: #fff;
+}
+
+.table th {
+  border: 2px solid orange;
+  font-weight: 400;
+  color: #fff;
+  padding: 15px;
+}
+
+.table td {
+  border: 1px solid #fff;
+  padding: 15px;
+}
+
+.thUpper::first-letter {
+  text-transform: uppercase;
+}
+
+@media (max-width: 720px) {
+  .table th {
+    font-size: 12px;
+    padding: 4px;
+  }
+
+  .table td {
+    font-size: 10px;
+    padding: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .table th {
+    font-size: 8px;
+    padding: 2px;
+  }
+
+  .table td {
+    font-size: 6px;
+    padding: 2px;
+  }
+}

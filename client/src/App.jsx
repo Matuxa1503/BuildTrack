@@ -1,55 +1,39 @@
-import s from './styles/App.module.css';
-import { useCallback, useState } from 'react';
-import { useEffect } from 'react';
-import AppInfo from './components/AppInfo';
-import AppTable from './components/AppTable';
-import Button from './components/Button';
 import { useSearchParams } from 'react-router-dom';
+import AppInfo from './components/AppInfo/AppInfo';
+import AppTable from './components/AppTable/AppTable';
+import Button from './components/Button/Button';
+import LoadIcon from './components/LoadIcon/LoadIcon';
 import { getElemFromDbAPI } from './api/api.mjs';
+import useFetchItem from './hooks/useFetchItem';
+import g from './styles/Global.module.css';
 
 const App = () => {
-  const [item, setItem] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [searchParams] = useSearchParams();
-
   const itemLink = decodeURIComponent(searchParams.get('link')) || '';
+  const elem = async () => await getElemFromDbAPI(itemLink);
 
-  const fetchData = useCallback(async () => {
-    if (!itemLink) {
-      setIsLoading(false);
-      throw new Error('Missing required parameters: user or link');
-    }
-
-    try {
-      const response = await getElemFromDbAPI(itemLink);
-      setItem(response.data.message);
-    } catch (err) {
-      console.log('Error in React App:', err.message);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [itemLink]);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+  const { item, isLoading, error } = useFetchItem(elem);
 
   return (
-    <div className={s.wrapper}>
-      <div className={s.container}>
+    <div className={g.wrapper}>
+      <div className={g.container}>
         {isLoading ? (
           <>
-            <h1 className={s.load}>Загрузка данных...</h1>
-            <img className={s.icon} src="https://cdn-icons-png.flaticon.com/512/1623/1623966.png" alt="" />
+            <h1 className={g.load}>Загрузка данных...</h1>
+            <LoadIcon />
+          </>
+        ) : error ? (
+          <>
+            <h1 className={g.load}>Ошибка: {error}</h1>
           </>
         ) : item ? (
           <>
             <AppInfo data={item.data} />
             <AppTable table={item.table} />
-            <Button content={'Клик для подробной информации'} link={item.data.link} />
+            <Button content={'Подробная информация'} link={item.data.link} />
           </>
         ) : (
-          <h1 className={s.load}>Данные не найдены</h1>
+          <h1 className={g.load}>Данные не найдены</h1>
         )}
       </div>
     </div>

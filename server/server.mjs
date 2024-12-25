@@ -24,7 +24,7 @@ app.get('/last', lastEl);
 app.get('/cron', cron);
 app.post('/webhook', getWebhookTg);
 app.post('/addUser', verifyOrCreateUser);
-app.post('/itemUser', itemUser);
+app.get('/itemUser', itemUser);
 app.delete('/deleteUser', deleteUser);
 
 app.listen(5000, () => {

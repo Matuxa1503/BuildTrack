@@ -34,6 +34,10 @@ export const nextTg = async (text, chatId, userId) => {
     await getLastElement(bot, chatId, userId);
   }
 
+  if (text === '/time') {
+    await handleCronJob();
+  }
+
   // bot.on('callback_query', async (msg) => {
   //   if (msg.data === 'last-buildings') {
   //     getLastElement(bot, msg.message.chat.id, msg.from.id);

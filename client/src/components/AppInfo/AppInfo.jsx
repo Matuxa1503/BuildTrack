@@ -1,4 +1,5 @@
-import s from '../styles/App.module.css';
+import s from './AppInfo.module.css';
+import g from '../../styles/Global.module.css';
 
 const AppInfo = ({ data }) => {
   let paragraphs;
@@ -12,8 +13,8 @@ const AppInfo = ({ data }) => {
 
   return (
     <>
-      <h1 className={s.title}>{data.title}</h1>
-      <h2 className={s.subtitle}>{data.dateBuild}</h2>
+      <h1 className={g.title}>{data.title}</h1>
+      <h2 className={g.subtitle}>{data.dateBuild}</h2>
       {paragraphs}
     </>
   );
