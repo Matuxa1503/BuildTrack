@@ -21,7 +21,7 @@ export const nextTg = async (text, chatId, userId) => {
     return bot.sendMessage(
       chatId,
       `Добро пожаловать. Для получения информации о последней застройке нажмите кнопку ниже или введите команду /last. При появлении новой застройки бот присылает её автоматически`,
-      btnOptions('Получить информацию о последней застройке', 'startType')
+      btnOptions('Последняя застройка', 'startType')
     );
   }
 
@@ -32,12 +32,6 @@ export const nextTg = async (text, chatId, userId) => {
   if (text === '/time') {
     await handleCronJob();
   }
-
-  // bot.on('callback_query', async (msg) => {
-  //   if (msg.data === 'last-buildings') {
-  //     getLastElement(bot, msg.message.chat.id, msg.from.id);
-  //   }
-  // });
 };
 
 export const handleCronJob = async () => {

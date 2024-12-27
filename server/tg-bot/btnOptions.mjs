@@ -1,8 +1,8 @@
-const btnOptions = (link = '', text, typeBtn) => {
+const btnOptions = (text, typeBtn, link = '') => {
   if (typeBtn === 'startType') {
     return {
       reply_markup: JSON.stringify({
-        inline_keyboard: [[{ text: text, callback_data: 'last-buildings' }]],
+        inline_keyboard: [[{ text: 'Последняя застройка', callback_data: '/last' }]],
       }),
     };
   }

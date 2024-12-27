@@ -7,7 +7,7 @@ const sendBuildingMessage = async (bot, usersArr, item) => {
       await bot.sendMessage(
         user.chatId,
         `Появилась новая застройка: \n${item.data.title}.\n${item.data.dateBuild} \nДля подробной информации кликнете по кнопке ниже:`,
-        btnOptions(item.data.link, 'Отобразить информацию', 'newType')
+        btnOptions('Отобразить информацию', 'newType', item.data.link)
       );
     } catch (err) {
       console.error('Error in sendBuildingMessage:', err.message);

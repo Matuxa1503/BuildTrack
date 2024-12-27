@@ -2,11 +2,11 @@ import { checkUserDb, createUserDb } from '../utils/users.mjs';
 
 const verifyOrCreateUser = async (req, res) => {
   try {
-    const { userIdTg, chatIdTg } = req.body;
-    const isExistsUser = await checkUserDb(userIdTg);
+    const { userId, chatId } = req.body;
+    const isExistsUser = await checkUserDb(userId);
 
     if (!isExistsUser) {
-      await createUserDb(userIdTg, chatIdTg);
+      await createUserDb(userId, chatId);
     }
     res.status(200).send('successful');
   } catch (err) {
