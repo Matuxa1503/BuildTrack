@@ -1,4 +1,4 @@
-import deleteUserDb from '../utils/deleteUserDb.mjs';
+import { deleteUserDb } from '../utils/users.mjs';
 
 const deleteUser = async (req, res) => {
   try {

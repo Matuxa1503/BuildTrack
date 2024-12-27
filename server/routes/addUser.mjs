@@ -1,11 +1,10 @@
-import checkUserDb from '../utils/checkUserDb.mjs';
-import createUserDb from '../utils/createUserDb.mjs';
+import { checkUserDb, createUserDb } from '../utils/users.mjs';
 
 const verifyOrCreateUser = async (req, res) => {
   try {
-    const userIdTg = req.body.userId;
-    const chatIdTg = req.body.chatId;
+    const { userIdTg, chatIdTg } = req.body;
     const isExistsUser = await checkUserDb(userIdTg);
+
     if (!isExistsUser) {
       await createUserDb(userIdTg, chatIdTg);
     }

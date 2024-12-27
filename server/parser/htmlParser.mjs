@@ -1,6 +1,6 @@
 import * as cheerio from 'cheerio';
-import getTable from './table/getTable.mjs';
 import getInfoData from './getInfo.mjs';
+import getTable from './table/getTable.mjs';
 
 export const htmlParser = (html) => {
   const $ = cheerio.load(html);

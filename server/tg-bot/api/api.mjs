@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const httpService = axios.create({
-  baseURL: 'https://server-kappa-steel.vercel.app',
+  baseURL: 'https://server-kappa-steel.vercel.app', // в env файл!!!!!!!!!!!
 });
 
 export const checkUserAPI = async (userId, chatId) => {

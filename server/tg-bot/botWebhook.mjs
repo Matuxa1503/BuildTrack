@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const botWebhook = async (token) => {
-  const WEBHOOK_URL = 'https://server-kappa-steel.vercel.app/webhook';
+  const WEBHOOK_URL = 'https://server-kappa-steel.vercel.app/webhook'; // в env файл!!!!!!!!!!!
 
   const setWebhook = async () => {
     try {

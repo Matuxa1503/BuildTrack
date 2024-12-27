@@ -3,8 +3,9 @@ import getLastElement from './getLastElement.mjs';
 import { checkUserAPI } from './api/api.mjs';
 import botWebhook from './botWebhook.mjs';
 import checkNewEl from './checkNewElements/checkNewEl.mjs';
+import btnOptions from './btnOptions.mjs';
 
-const token = '7244567882:AAHgGVxxk8Z2eosdLBJP44ja73UCMLhCXIY';
+const token = '7244567882:AAHgGVxxk8Z2eosdLBJP44ja73UCMLhCXIY'; // в env файл!!!!!!!!!!!
 const bot = new TelegramApi(token, { polling: false });
 
 export const start = async () => {
@@ -12,12 +13,6 @@ export const start = async () => {
 };
 
 export const nextTg = async (text, chatId, userId) => {
-  const btnOptions = {
-    reply_markup: JSON.stringify({
-      inline_keyboard: [[{ text: 'Получить информацию о последней застройке', callback_data: 'last-buildings' }]],
-    }),
-  };
-
   bot.setMyCommands([{ command: '/last', description: 'Информация о последней застройке' }]);
 
   if (text === '/start') {
@@ -26,7 +21,7 @@ export const nextTg = async (text, chatId, userId) => {
     return bot.sendMessage(
       chatId,
       `Добро пожаловать. Для получения информации о последней застройке нажмите кнопку ниже или введите команду /last. При появлении новой застройки бот присылает её автоматически`,
-      btnOptions
+      btnOptions('Получить информацию о последней застройке', 'startType')
     );
   }
 

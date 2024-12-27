@@ -1,8 +1,8 @@
-import lastElemDb from '../utils/lastElemDb.mjs';
+import { getLastBuildingDb } from '../utils/buildings.mjs';
 
 const lastEl = async (req, res) => {
   try {
-    const el = await lastElemDb();
+    const el = await getLastBuildingDb();
     res.status(200).json({ message: el });
   } catch (err) {
     console.error('Error in lastEl:', err.message);

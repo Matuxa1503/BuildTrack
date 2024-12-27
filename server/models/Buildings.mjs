@@ -26,7 +26,6 @@ const UsersSchema = new mongoose.Schema({
 });
 
 const BuildingsSchema = new mongoose.Schema({
-  // userId: { type: Number },
   items: [ItemSchema],
 });
 
