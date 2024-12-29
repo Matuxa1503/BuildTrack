@@ -1,6 +1,6 @@
 import * as cheerio from 'cheerio';
-import getInfoData from './getInfo.mjs';
-import getTable from './table/getTable.mjs';
+import getInfoBuilding from './infoBuilding.mjs';
+import getTable from './table/tableData.mjs';
 
 export const htmlParser = (html) => {
   const $ = cheerio.load(html);
@@ -15,7 +15,7 @@ export const htmlParser = (html) => {
       const dateBuild = trItem.find('td').eq(1).find("p:contains('Дата начала продаж')");
 
       if (Boolean(dateBuild.text())) {
-        const data = getInfoData(dateBuild, $);
+        const data = getInfoBuilding(dateBuild, $);
         const table = getTable(dateBuild, $);
         dataArr.push({ data, table });
       }

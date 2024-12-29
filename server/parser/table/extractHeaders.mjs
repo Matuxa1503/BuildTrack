@@ -1,4 +1,4 @@
-const headSubHeadData = (table, $, i) => {
+const getHeaders = (table, $, i) => {
   const arr = [];
   let tr;
   i === 0 ? (tr = table.find('tbody').find('tr').eq(0)) : (tr = table.find('tbody').find('tr').eq(1));
@@ -11,4 +11,4 @@ const headSubHeadData = (table, $, i) => {
   return arr;
 };
 
-export default headSubHeadData;
+export default getHeaders;

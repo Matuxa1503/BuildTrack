@@ -1,4 +1,4 @@
-const oneTable = (dateBuild) => {
+const getSingleTable = (dateBuild) => {
   const tables = dateBuild.closest('td').find('table');
 
   if (tables.length > 1) {
@@ -8,4 +8,4 @@ const oneTable = (dateBuild) => {
   }
 };
 
-export default oneTable;
+export default getSingleTable;

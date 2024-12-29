@@ -1,4 +1,4 @@
-import parser from '../parser/parser.mjs';
+import getDataForParsing from '../parser/dataForParsing.mjs';
 import { addBuildingsDb, getBuildingsDb } from '../utils/buildings.mjs';
 import compareData from '../utils/compareData.mjs';
 import { getUsersDb } from '../utils/users.mjs';
@@ -7,7 +7,7 @@ const processingData = async (req, res) => {
   try {
     const usersDb = await getUsersDb();
     const buildingsDb = await getBuildingsDb();
-    const parsedData = await parser();
+    const parsedData = await getDataForParsing();
     const elemsArr = compareData(parsedData, buildingsDb.items); // compare parsedData and buildingsDb. Return new data if there are any
 
     if (elemsArr.length > 0) {

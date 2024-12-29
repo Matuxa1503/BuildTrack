@@ -1,4 +1,4 @@
-const rowsTable = (table, $) => {
+const getTableRows = (table, $) => {
   const arr = [];
 
   table
@@ -22,4 +22,4 @@ const rowsTable = (table, $) => {
   return arr;
 };
 
-export default rowsTable;
+export default getTableRows;

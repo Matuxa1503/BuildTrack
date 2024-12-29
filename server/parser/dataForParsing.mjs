@@ -1,7 +1,7 @@
 import { getDataFromGrBuildAPI } from '../api/api.mjs';
 import { htmlParser } from './htmlParser.mjs';
 
-const parser = async () => {
+const getDataForParsing = async () => {
   try {
     const dataFromGrBy = await getDataFromGrBuildAPI();
     return htmlParser(dataFromGrBy.data);
@@ -10,4 +10,4 @@ const parser = async () => {
   }
 };
 
-export default parser;
+export default getDataForParsing;

@@ -1,4 +1,4 @@
-const getInfoData = (dateBuild, $) => {
+const getInfoBuilding = (dateBuild, $) => {
   const title = dateBuild.siblings().find('h3 a');
   const link = title.attr('href');
 
@@ -13,4 +13,4 @@ const getInfoData = (dateBuild, $) => {
   return { title: title.text().trim(), dateBuild: dateBuild.text().trim(), link, someInfoBuild };
 };
 
-export default getInfoData;
+export default getInfoBuilding;
