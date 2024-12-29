@@ -1,7 +1,7 @@
 import btnOptions from '../btnOptions.mjs';
-import handle403Error from '../handle403Error.mjs';
+import handle403Error from '../403Error.mjs';
 
-const sendBuildingMessage = async (bot, usersArr, item) => {
+const sendNewBuilding = async (bot, usersArr, item) => {
   for (const user of usersArr) {
     try {
       await bot.sendMessage(
@@ -10,10 +10,10 @@ const sendBuildingMessage = async (bot, usersArr, item) => {
         btnOptions('Отобразить информацию', 'newType', item.data.link)
       );
     } catch (err) {
-      console.error('Error in sendBuildingMessage:', err.message);
+      console.error('Error in sendNewBuilding:', err.message);
       handle403Error(err, user.userId);
     }
   }
 };
 
-export default sendBuildingMessage;
+export default sendNewBuilding;

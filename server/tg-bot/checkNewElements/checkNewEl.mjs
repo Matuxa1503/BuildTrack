@@ -1,7 +1,7 @@
-import sendBuildingMessage from './sendBuildingMessage.mjs';
+import sendNewBuilding from './sendNewBuilding.mjs';
 import { checkNewElAPI } from '../api/api.mjs';
 
-const checkNewEl = async (bot) => {
+const checkNewElement = async (bot) => {
   try {
     // get users from DB and get new buildings
     const response = await checkNewElAPI();
@@ -10,7 +10,7 @@ const checkNewEl = async (bot) => {
 
     if (elemsArr.length > 0 && usersArr.length > 0) {
       for (const item of elemsArr) {
-        await sendBuildingMessage(bot, usersArr, item);
+        await sendNewBuilding(bot, usersArr, item);
       }
     }
   } catch (err) {
@@ -18,4 +18,4 @@ const checkNewEl = async (bot) => {
   }
 };
 
-export default checkNewEl;
+export default checkNewElement;

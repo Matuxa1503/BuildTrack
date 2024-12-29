@@ -1,8 +1,8 @@
 import TelegramApi from 'node-telegram-bot-api';
-import getLastElement from './getLastElement.mjs';
+import getLastElement from './lastEl.mjs';
 import { checkUserAPI } from './api/api.mjs';
 import botWebhook from './botWebhook.mjs';
-import checkNewEl from './checkNewElements/checkNewEl.mjs';
+import checkNewElement from './checkNewElements/checkNewEl.mjs';
 import btnOptions from './btnOptions.mjs';
 
 const token = '7244567882:AAHgGVxxk8Z2eosdLBJP44ja73UCMLhCXIY'; // в env файл!!!!!!!!!!!
@@ -12,7 +12,7 @@ export const start = async () => {
   await botWebhook(token); // connect tg bot and vercel
 };
 
-export const nextTg = async (text, chatId, userId) => {
+export const handleCommandTg = async (text, chatId, userId) => {
   bot.setMyCommands([{ command: '/last', description: 'Информация о последней застройке' }]);
 
   if (text === '/start') {
@@ -35,5 +35,5 @@ export const nextTg = async (text, chatId, userId) => {
 };
 
 export const handleCronJob = async () => {
-  await checkNewEl(bot);
+  await checkNewElement(bot);
 };
