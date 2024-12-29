@@ -4,8 +4,10 @@ import { checkUserAPI } from './api/api.mjs';
 import botWebhook from './botWebhook.mjs';
 import checkNewElement from './checkNewElements/checkNewEl.mjs';
 import btnOptions from './btnOptions.mjs';
+import { config } from 'dotenv';
+config();
 
-const token = '7244567882:AAHgGVxxk8Z2eosdLBJP44ja73UCMLhCXIY'; // в env файл!!!!!!!!!!!
+const token = process.env.TG_TOKEN;
 const bot = new TelegramApi(token, { polling: false });
 
 export const start = async () => {

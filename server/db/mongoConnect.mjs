@@ -1,7 +1,9 @@
+import { config } from 'dotenv';
 import mongoose from 'mongoose';
-// в env файл!!!!!!!!!
+config();
+
 const mongoConnect = () => {
-  const uri = 'mongodb+srv://Matuxa:19801103Cure@cluster0.i2sz2.mongodb.net/BuildingsData?retryWrites=true&w=majority&appName=Cluster0';
+  const uri = process.env.MONGO_CONNECT;
   mongoose
     .connect(uri)
     .then(console.log('Connect to MongoDB'))

@@ -1,7 +1,9 @@
 import axios from 'axios';
+import { config } from 'dotenv';
+config();
 
 export const httpService = axios.create({
-  baseURL: 'https://server-kappa-steel.vercel.app', // в env файл!!!!!!!!!!!
+  baseURL: process.env.SERVER_URL,
 });
 
 export const checkUserAPI = async (userId, chatId) => {
