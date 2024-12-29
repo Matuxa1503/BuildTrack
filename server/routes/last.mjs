@@ -1,4 +1,4 @@
-import { getLastBuildingDb } from '../utils/buildings.mjs';
+import { getLastBuildingDb } from '../db/buildingsDB.mjs';
 
 const lastEl = async (req, res) => {
   try {

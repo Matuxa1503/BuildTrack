@@ -7,7 +7,7 @@ import deleteUser from './routes/deleteUser.mjs';
 import processingData from './routes/proc.mjs';
 import getWebhookTg from './routes/getWebhookTg.mjs';
 import cron from './routes/cron.mjs';
-import mongoConnect from './utils/mongoConnect.mjs';
+import mongoConnect from './db/mongoConnect.mjs';
 import { start } from './tg-bot/tgBot.mjs';
 
 const app = express();

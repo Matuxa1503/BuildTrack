@@ -1,4 +1,4 @@
-import { checkUserDb, createUserDb } from '../utils/users.mjs';
+import { checkUserDb, createUserDb } from '../db/usersDB.mjs';
 
 const verifyOrCreateUser = async (req, res) => {
   try {

@@ -1,7 +1,7 @@
+import { addBuildingsDb, getBuildingsDb } from '../db/buildingsDB.mjs';
+import { getUsersDb } from '../db/usersDB.mjs';
+import compareData from '../parser/compareData.mjs';
 import getDataForParsing from '../parser/dataForParsing.mjs';
-import { addBuildingsDb, getBuildingsDb } from '../utils/buildings.mjs';
-import compareData from '../utils/compareData.mjs';
-import { getUsersDb } from '../utils/users.mjs';
 
 const processingData = async (req, res) => {
   try {

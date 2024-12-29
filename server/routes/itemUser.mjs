@@ -1,4 +1,4 @@
-import { getBuildingDb } from '../utils/buildings.mjs';
+import { getBuildingDb } from '../db/buildingsDB.mjs';
 
 const itemUser = async (req, res) => {
   try {
