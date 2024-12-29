@@ -3,7 +3,7 @@ import { getUsersDb } from '../db/usersDB.mjs';
 import compareData from '../parser/compareData.mjs';
 import getDataForParsing from '../parser/dataForParsing.mjs';
 
-const processingData = async (req, res) => {
+const processNewBuildings = async (req, res) => {
   try {
     const usersDb = await getUsersDb();
     const buildingsDb = await getBuildingsDb();
@@ -16,9 +16,9 @@ const processingData = async (req, res) => {
 
     res.status(200).json({ message: elemsArr, users: usersDb }); // return data and users in tg
   } catch (err) {
-    console.error('Error in processingData:', err.message);
+    console.error('Error in processNewBuildingsData:', err.message);
     res.status(400).send('An error occurred');
   }
 };
 
-export default processingData;
+export default processNewBuildings;

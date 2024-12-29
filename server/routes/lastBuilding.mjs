@@ -1,6 +1,6 @@
 import { getLastBuildingDb } from '../db/buildingsDB.mjs';
 
-const lastEl = async (req, res) => {
+const getLastBuilding = async (req, res) => {
   try {
     const el = await getLastBuildingDb();
     res.status(200).json({ message: el });
@@ -10,4 +10,4 @@ const lastEl = async (req, res) => {
   }
 };
 
-export default lastEl;
+export default getLastBuilding;

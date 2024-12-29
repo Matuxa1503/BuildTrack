@@ -1,6 +1,6 @@
 import { getBuildingDb } from '../db/buildingsDB.mjs';
 
-const itemUser = async (req, res) => {
+const getItemUser = async (req, res) => {
   try {
     const link = req.query.itemLink;
     const el = await getBuildingDb(link);
@@ -11,4 +11,4 @@ const itemUser = async (req, res) => {
   }
 };
 
-export default itemUser;
+export default getItemUser;

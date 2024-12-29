@@ -1,6 +1,6 @@
 import { handleCronJob } from '../tg-bot/tgBot.mjs';
 
-const cron = async () => {
+const runCronJob = async () => {
   try {
     await handleCronJob();
   } catch (err) {
@@ -8,4 +8,4 @@ const cron = async () => {
   }
 };
 
-export default cron;
+export default runCronJob;

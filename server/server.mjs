@@ -1,12 +1,12 @@
 import express from 'express';
 import cors from 'cors';
-import lastEl from './routes/last.mjs';
-import verifyOrCreateUser from './routes/addUser.mjs';
-import itemUser from './routes/itemUser.mjs';
+import verifyOrCreateUser from './routes/userVerification.mjs';
+import getLastBuilding from './routes/lastBuilding.mjs';
+import getItemUser from './routes/itemUser.mjs';
 import deleteUser from './routes/deleteUser.mjs';
-import processingData from './routes/proc.mjs';
-import getWebhookTg from './routes/getWebhookTg.mjs';
-import cron from './routes/cron.mjs';
+import processNewBuildings from './routes/processingData.mjs';
+import runCronJob from './routes/cronJob.mjs';
+import handleWebhookTg from './routes/webhookTg.mjs';
 import mongoConnect from './db/mongoConnect.mjs';
 import { start } from './tg-bot/tgBot.mjs';
 
@@ -19,11 +19,11 @@ app.get('/', (req, res) => {
   res.status(200).send('Hello from Express!');
 });
 
-app.get('/proc', processingData);
-app.get('/itemUser', itemUser);
-app.get('/last', lastEl);
-app.get('/cron', cron);
-app.post('/webhook', getWebhookTg);
+app.get('/proc', processNewBuildings);
+app.get('/itemUser', getItemUser);
+app.get('/last', getLastBuilding);
+app.get('/cron', runCronJob);
+app.post('/webhook', handleWebhookTg);
 app.post('/addUser', verifyOrCreateUser);
 app.delete('/deleteUser', deleteUser);
 
