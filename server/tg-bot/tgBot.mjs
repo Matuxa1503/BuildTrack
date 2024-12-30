@@ -30,10 +30,6 @@ export const handleCommandTg = async (text, chatId, userId) => {
   if (text === '/last') {
     await getLastElement(bot, chatId, userId);
   }
-
-  if (text === '/time') {
-    await handleCronJob();
-  }
 };
 
 export const handleCronJob = async () => {
