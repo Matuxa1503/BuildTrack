@@ -16,7 +16,7 @@ app.use(cors());
 mongoConnect();
 
 app.get('/', (req, res) => {
-  res.status(200).send('Hello from Express!');
+  res.status(200).send('Hello from Express after deploy!');
 });
 
 app.get('/proc', processNewBuildings);
