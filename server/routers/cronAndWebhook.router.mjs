@@ -3,7 +3,7 @@ import { handleWebhookTg, runCronJob } from '../controllers/cronAndWebhook.contr
 
 const router = express.Router();
 
-router.get('/webhook', handleWebhookTg);
+router.post('/webhook', handleWebhookTg);
 router.get('/cron', runCronJob);
 
 export default router;

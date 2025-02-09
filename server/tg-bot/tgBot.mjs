@@ -1,6 +1,6 @@
 import TelegramApi from 'node-telegram-bot-api';
 import getLastElement from './lastEl.mjs';
-import { checkUserAPI } from './api/api.mjs';
+import { addUserAPI, checkUserAPI } from './api/api.mjs';
 import botWebhook from './botWebhook.mjs';
 import checkNewElement from './checkNewElements/checkNewEl.mjs';
 import btnOptions from './btnOptions.mjs';
@@ -18,7 +18,8 @@ export const handleCommandTg = async (text, chatId, userId) => {
   bot.setMyCommands([{ command: '/last', description: 'Информация о последней застройке' }]);
 
   if (text === '/start') {
-    await checkUserAPI(userId, chatId);
+    const userExists = (await checkUserAPI(userId)).data.message; //check user
+    userExists && (await addUserAPI(userId)); //add user
 
     return bot.sendMessage(
       chatId,

@@ -6,11 +6,19 @@ export const httpService = axios.create({
   baseURL: process.env.SERVER_URL,
 });
 
-export const checkUserAPI = async (userId, chatId) => {
+export const checkUserAPI = async (userId) => {
+  try {
+    await httpService.get('/user/check', { userId });
+  } catch (err) {
+    console.error('Error checkUserAPI:', err.message);
+  }
+};
+
+export const addUserAPI = async (userId, chatId) => {
   try {
     await httpService.post('/user/add', { userId, chatId });
   } catch (err) {
-    console.error('Error checkUserAPI:', err.message);
+    console.error('Error addUserAPI:', err.message);
   }
 };
 
