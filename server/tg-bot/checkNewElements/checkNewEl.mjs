@@ -1,10 +1,10 @@
+import { checkNewEl } from '../../services/telegram.service';
 import sendNewBuilding from './sendNewBuilding.mjs';
-import { checkNewElAPI } from '../api/api.mjs';
 
 const checkNewElement = async (bot) => {
   try {
     // get users from DB and get new buildings
-    const response = await checkNewElAPI();
+    const response = await checkNewEl();
     const elemsArr = response?.data?.message || '';
     const usersArr = response?.data?.users || '';
 

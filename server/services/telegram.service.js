@@ -6,44 +6,44 @@ export const httpService = axios.create({
   baseURL: process.env.SERVER_URL,
 });
 
-export const checkUserAPI = async (userId) => {
+export const checkUser = async (userId) => {
   try {
     await httpService.get('/user/check', { userId });
   } catch (err) {
-    console.error('Error checkUserAPI:', err.message);
+    console.error('Error checkUser:', err.message);
   }
 };
 
-export const addUserAPI = async (userId, chatId) => {
+export const addUser = async (userId, chatId) => {
   try {
     await httpService.post('/user/add', { userId, chatId });
   } catch (err) {
-    console.error('Error addUserAPI:', err.message);
+    console.error('Error addUser:', err.message);
   }
 };
 
-export const deleteUserAPI = async (userId) => {
+export const deleteUser = async (userId) => {
   try {
     await httpService.delete('/user/delete', { data: { userId } });
   } catch (err) {
-    console.error('Error deleteUserAPI:', err.message);
+    console.error('Error deleteUser:', err.message);
   }
 };
 
-export const getLastElementAPI = async () => {
+export const getLastEl = async () => {
   try {
     const response = await httpService.get('/building/last');
     return response;
   } catch (err) {
-    console.error('Error getLastElementAPI:', err.message);
+    console.error('Error getLastEl:', err.message);
   }
 };
 
-export const checkNewElAPI = async () => {
+export const checkNewEl = async () => {
   try {
     const response = await httpService.get('/building/proc');
     return response;
   } catch (err) {
-    console.error('Error checkNewElAPI:', err.message);
+    console.error('Error checkNewEl:', err.message);
   }
 };
