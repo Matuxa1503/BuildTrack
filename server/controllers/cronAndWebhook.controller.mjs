@@ -16,7 +16,7 @@ export const handleWebhookTg = async (req, res) => {
       await handleCommandTg(body.text, body.chat.id, body.from.id);
     }
 
-    if (req.body.callback_query?.data && req.body.callback_query?.message?.chat?.id && req.body.callback_query?.from?.id) {
+    if (req.body.callback_query && req.body.callback_query.data) {
       const body = req.body.callback_query;
       console.log('callback_query', body);
       await handleCommandTg(body.data, body.message.chat.id, body.from.id);
