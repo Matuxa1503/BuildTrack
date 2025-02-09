@@ -1,4 +1,4 @@
-import { checkNewEl } from '../../services/telegram.service';
+import { checkNewEl } from '../../services/telegram.service.mjs';
 import sendNewBuilding from './sendNewBuilding.mjs';
 
 const checkNewElement = async (bot) => {

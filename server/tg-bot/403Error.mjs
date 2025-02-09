@@ -1,4 +1,4 @@
-import { deleteUser } from '../services/telegram.service';
+import { deleteUser } from '../services/telegram.service.mjs';
 
 const handle403Error = async (err, userId) => {
   if (err.response && err.response.statusCode === 403) {

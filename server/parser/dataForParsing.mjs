@@ -1,4 +1,4 @@
-import { getDataFromGrBuild } from '../services/building.service';
+import { getDataFromGrBuild } from '../services/building.service.mjs';
 import { htmlParser } from './htmlParser.mjs';
 
 const getDataForParsing = async () => {

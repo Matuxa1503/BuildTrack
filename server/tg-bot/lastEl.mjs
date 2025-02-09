@@ -1,4 +1,4 @@
-import { getLastEl } from '../services/telegram.service';
+import { getLastEl } from '../services/telegram.service.mjs';
 import btnOptions from './btnOptions.mjs';
 
 const getLastElement = async (bot, chat) => {
