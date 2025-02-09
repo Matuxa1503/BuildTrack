@@ -4,7 +4,7 @@ import botWebhook from './botWebhook.mjs';
 import checkNewElement from './checkNewElements/checkNewEl.mjs';
 import btnOptions from './btnOptions.mjs';
 import { config } from 'dotenv';
-import { addUser, checkUser } from '../services/telegram.service';
+import { addUser, checkUser } from '../services/telegram.service.mjs';
 config();
 
 const token = process.env.TG_TOKEN;
