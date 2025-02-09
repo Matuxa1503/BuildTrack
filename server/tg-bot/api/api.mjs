@@ -8,7 +8,7 @@ export const httpService = axios.create({
 
 export const checkUserAPI = async (userId, chatId) => {
   try {
-    await httpService.post('/addUser', { userId, chatId });
+    await httpService.post('/user/add', { userId, chatId });
   } catch (err) {
     console.error('Error checkUserAPI:', err.message);
   }
@@ -16,7 +16,7 @@ export const checkUserAPI = async (userId, chatId) => {
 
 export const deleteUserAPI = async (userId) => {
   try {
-    await httpService.delete('/deleteUser', { data: { userId } });
+    await httpService.delete('/user/delete', { data: { userId } });
   } catch (err) {
     console.error('Error deleteUserAPI:', err.message);
   }
@@ -24,7 +24,7 @@ export const deleteUserAPI = async (userId) => {
 
 export const getLastElementAPI = async () => {
   try {
-    const response = await httpService.get('/last');
+    const response = await httpService.get('/building/last');
     return response;
   } catch (err) {
     console.error('Error getLastElementAPI:', err.message);
@@ -33,7 +33,7 @@ export const getLastElementAPI = async () => {
 
 export const checkNewElAPI = async () => {
   try {
-    const response = await httpService.get('/proc');
+    const response = await httpService.get('/building/proc');
     return response;
   } catch (err) {
     console.error('Error checkNewElAPI:', err.message);
