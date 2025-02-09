@@ -6,7 +6,7 @@ export const httpService = axios.create({
 
 export const getElemFromDbAPI = async (itemLink) => {
   try {
-    const response = await httpService.get('/itemUser', { params: { itemLink } });
+    const response = await httpService.get(`/building/item/${itemLink}`);
     return response;
   } catch (err) {
     console.error('Error getElemFromDbAPI:', err.message);

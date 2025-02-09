@@ -1,10 +1,10 @@
-import { getLastElementAPI } from './api/api.mjs';
+import { getLastEl } from '../services/telegram.service';
 import btnOptions from './btnOptions.mjs';
 
 const getLastElement = async (bot, chat) => {
   try {
     const chatId = chat;
-    const response = await getLastElementAPI();
+    const response = await getLastEl();
     const el = response?.data?.message?.items?.[0]?.data || null;
 
     if (el) {

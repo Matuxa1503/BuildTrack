@@ -1,6 +1,14 @@
-import { handleCommandTg } from '../tg-bot/tgBot.mjs';
+import { handleCronJob, handleCommandTg } from '../tg-bot/tgBot.mjs';
 
-const handleWebhookTg = async (req, res) => {
+export const runCronJob = async () => {
+  try {
+    await handleCronJob();
+  } catch (err) {
+    console.error('Error executing Cron job:', err.message);
+  }
+};
+
+export const handleWebhookTg = async (req, res) => {
   try {
     if (req.body.message && req.body.message.text && req.body.message.chat && req.body.message.from) {
       const body = req.body.message;
@@ -18,5 +26,3 @@ const handleWebhookTg = async (req, res) => {
     res.status(400).send('An error occurred');
   }
 };
-
-export default handleWebhookTg;

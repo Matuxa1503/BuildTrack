@@ -1,9 +1,9 @@
-import { getDataFromGrBuildAPI } from '../api/api.mjs';
+import { getDataFromGrBuild } from '../services/building.service';
 import { htmlParser } from './htmlParser.mjs';
 
 const getDataForParsing = async () => {
   try {
-    const dataFromGrBy = await getDataFromGrBuildAPI();
+    const dataFromGrBy = await getDataFromGrBuild();
     return htmlParser(dataFromGrBy.data);
   } catch (err) {
     console.log(err.message);
