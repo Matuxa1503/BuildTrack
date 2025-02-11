@@ -1,4 +1,8 @@
+import { config } from 'dotenv';
+
 const btnOptions = (text, typeBtn, link = '') => {
+  config();
+
   if (typeBtn === 'startType') {
     return {
       reply_markup: JSON.stringify({
@@ -8,10 +12,9 @@ const btnOptions = (text, typeBtn, link = '') => {
   }
 
   if (typeBtn === 'newType' || typeBtn === 'lastType') {
-    const linkItem = encodeURIComponent(link);
     return {
       reply_markup: JSON.stringify({
-        inline_keyboard: [[{ text: text, url: `https://client-liard-xi.vercel.app?link=${linkItem}` }]],
+        inline_keyboard: [[{ text: text, url: `${process.env.CLIENT_URL}?link=${encodeURIComponent(link)}` }]],
       }),
     };
   }

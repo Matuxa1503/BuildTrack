@@ -1,13 +1,12 @@
 import axios from 'axios';
 
 export const httpService = axios.create({
-  baseURL: 'https://server-kappa-steel.vercel.app',
+  baseURL: 'https://server-gold-beta-20.vercel.app',
 });
 
-export const getElemFromDbAPI = async (itemLink) => {
+export const getElemFromDbAPI = async (link) => {
   try {
-    const response = await httpService.get(`/building/item/${itemLink}`);
-    return response;
+    return await httpService.get(`/building/item?link=${link}`);
   } catch (err) {
     console.error('Error getElemFromDbAPI:', err.message);
   }

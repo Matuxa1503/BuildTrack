@@ -8,7 +8,7 @@ export const httpService = axios.create({
 
 export const checkUser = async (userId) => {
   try {
-    await httpService.get('/user/check', { userId });
+    return await httpService.get('/user/check', { params: { userId } });
   } catch (err) {
     console.error('Error checkUser:', err.message);
   }

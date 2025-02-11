@@ -9,7 +9,9 @@ import g from './styles/Global.module.css';
 
 const App = () => {
   const [searchParams] = useSearchParams();
-  const itemLink = decodeURIComponent(searchParams.get('link')) || '';
+  const itemLink = decodeURIComponent(searchParams.get('link'));
+  console.log('App', itemLink);
+
   const elem = async () => await getElemFromDbAPI(itemLink);
 
   const { item, isLoading, error } = useFetchItem(elem);

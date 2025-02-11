@@ -15,24 +15,36 @@ export const start = async () => {
 };
 
 export const handleCommandTg = async (text, chatId, userId) => {
-  bot.setMyCommands([{ command: '/last', description: 'Информация о последней застройке' }]);
+  await bot.setMyCommands([{ command: '/last', description: 'Информация о последней застройке' }]);
 
   if (text === '/start') {
-    const userExists = (await checkUser(userId)).data.message; //check user
-    userExists && (await addUser(userId)); //add user
+    try {
+      const userExists = (await checkUser(userId)).data.message; //check user
+      if (!userExists) await addUser(userId, chatId);
 
-    return bot.sendMessage(
-      chatId,
-      `Добро пожаловать. Для получения информации о последней застройке нажмите кнопку ниже или введите команду /last. При появлении новой застройки бот присылает её автоматически`,
-      btnOptions('Последняя застройка', 'startType')
-    );
+      return bot.sendMessage(
+        chatId,
+        `Добро пожаловать. Для получения информации о последней застройке нажмите кнопку ниже или введите команду /last. При появлении новой застройки бот присылает её автоматически`,
+        btnOptions('Последняя застройка', 'startType')
+      );
+    } catch (err) {
+      console.error('handleCommand start:', err.message);
+    }
   }
 
   if (text === '/last') {
-    await getLastElement(bot, chatId, userId);
+    try {
+      await getLastElement(bot, chatId, userId);
+    } catch (err) {
+      console.error('handleCommand last:', err.message);
+    }
   }
 };
 
 export const handleCronJob = async () => {
-  await checkNewElement(bot);
+  try {
+    await checkNewElement(bot);
+  } catch (err) {
+    console.error('handleCronJob', err.message);
+  }
 };

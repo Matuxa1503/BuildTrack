@@ -4,7 +4,7 @@ import { getBuildingByLink, getLastBuilding, processNewBuildings } from '../cont
 const router = express.Router();
 
 router.get('/proc', processNewBuildings);
-router.get('/item/:link', getBuildingByLink);
+router.get('/item', getBuildingByLink);
 router.get('/last', getLastBuilding);
 
 export default router;

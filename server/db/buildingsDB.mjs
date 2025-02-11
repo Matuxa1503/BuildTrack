@@ -25,6 +25,7 @@ export const getBuildingDb = async (link) => {
   try {
     const buildings = await getBuildingsDb();
     const document = buildings.items.find((item) => item.data.link === link);
+    console.log('getBuildingDb', document);
     return document;
   } catch (err) {
     console.error('Error getting document from Db:', err.message);

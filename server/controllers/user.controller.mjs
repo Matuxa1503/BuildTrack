@@ -2,7 +2,7 @@ import { checkUserDb, createUserDb, deleteUserDb } from '../db/usersDB.mjs';
 
 export const verifyUser = async (req, res) => {
   try {
-    const { userId } = req.body;
+    const { userId } = req.query;
     const isExistsUser = await checkUserDb(userId);
     res.status(200).json({ message: isExistsUser });
   } catch (err) {
@@ -24,8 +24,8 @@ export const createUser = async (req, res) => {
 
 export const deleteUser = async (req, res) => {
   try {
-    const userIdTg = req.body.userId;
-    await deleteUserDb(userIdTg);
+    const { userId } = req.body;
+    await deleteUserDb(userId);
     res.status(200).send('successful');
   } catch (err) {
     console.error('Error in deleteUser:', err.message);
