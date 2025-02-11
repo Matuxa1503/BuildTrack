@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const httpService = axios.create({
-  baseURL: 'https://server-gold-beta-20.vercel.app',
+  baseURL: 'https://server-six-kohl.vercel.app',
 });
 
 export const getElemFromDbAPI = async (link) => {
