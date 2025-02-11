@@ -10,6 +10,7 @@ const botWebhook = async (token) => {
       await axios.post(`https://api.telegram.org/bot${token}/setWebhook`, {
         url: WEBHOOK_URL,
       });
+      console.log('webhook was set!');
     } catch (error) {
       console.error('Error setting webhook:', error.response?.data || error.message);
     }
