@@ -19,7 +19,7 @@ export const handleCommandTg = async (text, chatId, userId) => {
 
   if (text === '/start') {
     try {
-      const userExists = (await checkUser(userId)).data.message; //check user
+      const userExists = (await checkUser(userId)).data.message;
       if (!userExists) await addUser(userId, chatId);
 
       return bot.sendMessage(
