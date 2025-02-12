@@ -8,9 +8,8 @@ import useFetchItem from './hooks/useFetchItem';
 import g from './styles/Global.module.css';
 
 const App = () => {
-  // const [searchParams] = useSearchParams();
-  // const itemLink = decodeURIComponent(searchParams.get('link')) || '';
-  const itemLink = 'http://www.ghb.by/ru/construction/nedvizhimost-dogovor/7350/';
+  const [searchParams] = useSearchParams();
+  const itemLink = decodeURIComponent(searchParams.get('link')) || '';
 
   const elem = async () => await getElemFromDbAPI(itemLink);
 
