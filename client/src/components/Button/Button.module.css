@@ -16,15 +16,11 @@
 }
 
 @media (max-width: 720px) {
-  .btn {
-    font-size: 20px;
-    padding: 12px;
-  }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 500px) {
   .btn {
-    font-size: 14px;
-    padding: 6px;
+    font-size: 20px;
+    padding: 16px;
   }
 }

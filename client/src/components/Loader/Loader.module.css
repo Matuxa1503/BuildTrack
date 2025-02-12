@@ -1,7 +1,12 @@
 .icon {
   width: 100px;
-  margin-top: 30px;
+  margin-top: 50px;
   animation: rotate 2s linear infinite;
+}
+
+.load {
+  font-size: 30px;
+  color: orange;
 }
 
 @keyframes rotate {

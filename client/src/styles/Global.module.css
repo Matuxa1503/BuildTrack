@@ -8,7 +8,8 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: url('https://i.pinimg.com/originals/3e/11/56/3e1156d0a3eb1b6e9ee5820bc47d74d4.jpg');
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url('https://i.pinimg.com/originals/3e/11/56/3e1156d0a3eb1b6e9ee5820bc47d74d4.jpg') center/cover no-repeat;
 }
 
 .container {
@@ -20,34 +21,24 @@ body {
 
 .title {
   font-size: 38px;
-  font-weight: 400;
+  font-weight: 700;
   margin-bottom: 30px;
   color: orange;
 }
 
 .subtitle {
   font-size: 24px;
-  font-weight: 300;
+  font-weight: 700;
   color: orange;
 }
 
 .load {
   font-size: 30px;
-  color: aliceblue;
+  color: orange;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 500px) {
   .title {
     font-size: 24px;
-  }
-
-  .subtitle {
-    font-size: 16px;
-  }
-}
-
-@media (max-width: 480px) {
-  .title {
-    font-size: 16px;
   }
 }
