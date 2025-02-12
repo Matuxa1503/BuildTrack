@@ -28,7 +28,6 @@ export const processNewBuildings = async (req, res) => {
 export const getBuildingByLink = async (req, res) => {
   try {
     const { link } = req.query;
-    console.log('getBuildingByLink', req.query);
     const el = await getBuildingDb(link);
     res.status(200).json({ message: el });
   } catch (err) {
